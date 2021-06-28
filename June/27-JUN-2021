@@ -1,0 +1,138 @@
+How do you fix a bug?
+#1 go through the bug reported and verify whether it is a bug or not?
+#2 reproduce the bug in the development environment following the steps to reproduce
+  principle: if we cannot reproduct a bug, it can never be fixed (slogan)
+#3 by reproducting the bug developer has to identify the root cause of the problem
+#4 analyze root cause identify the changes required for fixing the bug
+#5 prepare test plan 
+#6 fix the bug by modifying code changes 
+#7 re-execute the unit testcases including the new prepared
+#8 certify the changes are working properly and move the bug to fixed status
+
+
+
+How does the/who will move code will be moved to the qa environment?
+In general the qa by themselve are responsible for moving the code from scm repositories into the qa environment. if it is an enterprise organization then there will a separate team working on build and deployment management of an application (release engineers / ops engineers)
+  
+short:-
+either qa or release engineers will take care of moving the code from scm (repo) -> qa environment for facilitating the testing process
+  
+In order to help the qa team in understanding and perform build and deployment of the application the development team has to provide handoff guide / setup guide to the qa team.
+  For eg an handoff guide or a setup guide would describe the below
+  1. which softwares / versions are required to be installed on the environment (procedure of installation)
+  2. how to setup the database schema and test data to run the application
+  3. what dependencies are required for building the application
+  4. instructions on setting up the build path and compiling the project
+  5. package the application
+  6. setup up the application server, configuring the application server to make it ready for deployment
+  7. copy the application war file onto the application server
+  8. start the application server
+  9. validate deployment (to verify it is ready to access)
+    
+In the above few are one-time activities and few has to be carried each time while deploying the code.   
+The developer delivers the handoff guide to qa/release engineers, where those people has to throughly go through the documentation has to understand each of these steps in building and deploying the code to begin testing. 
+Performing these steps manually by going through the handoff document has quite a number of challenges / difficulties:-
+  1. Most of the activities that are described as part of the handoff guide / setup guide are seems to quite relatable to development rather than qa/release engineers. how on earth a person who can carry these things becomes qa/release engineer? look like it quite tedious job for qa/release engineer in understanding these activities in building and deploying the application
+  2. there are quite a number of activities that has to be conducted by qa/release engineers in building and deployment of the application, which is going to eaten up lot of time in release the project
+  3. if something goes wrong while performing the above activities, since the qa/release engineers has zero knowledge about these, they always restarts the whole efforts from scratch which is going to further kill the time of deployment and delivery
+  4. As all of these activities has to be conducted in a sequence order, any distraction in carrying out these activities will result in failure of build/deployment and again it has to be done from scratch
+  5. over the time the activities we have to conduct for building/deploying the code might change, but accomodating such changes are seems to toughest job, since people are involed and should educated well.
+
+The build/deployment activites are seems to be performed repeatitively during the time of qa cycle, qa regression, uat cycle, uat regression and even during production deployment, since it is a repeative job that has to be conducted multiple times across different stages, can we expected atmost perfection in carrying these job by these people?
+No, because humans are prone to perform mistakes, which leads to failure.
+    
+How to solve the above problems?
+Looks like all the steps that has to perform in deploying and release the code across various environments seems to be constant and same. If this has been carried by the human, it takes lot of time and chances of failure also will be high.
+Since it is a repeatitive activity that has to conducted for multiple times instead of doing it manually we can automate the above process through programming.
+  
+we need to build automation tools?
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

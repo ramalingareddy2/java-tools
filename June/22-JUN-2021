@@ -1,0 +1,370 @@
+Proposal state
+1. Business Proposal document
+2. Detailed Business Proposal/High Level system architecture
+
+Inception of the project state
+3. Software requirement specification document
+
+Project Development
+--------------------
+4. (low/high) Business Requirement Document
+5. (low/high) use case
+  
+Before commencment of the project development, the team has to brain storm the requirements, analyze understand it, which is part of project kickoff meetings, during this meeting the manager and team would be doing the below activities
+  - understand requirement and analyze
+  - identify resources
+  - identify modules
+  - prioritize the modules
+  - release plan
+  - fix the delivery deadlines
+  
+To assign and track the work for the project, the project manager has to use project tracking tools like
+- microsoft project plan
+- redmine
+- jira
+- team collab etc
+using these tools the project management
+  assigns the work
+  team will give their estimates to the work
+  mark the progress of the work there are doing
+  manager will derive charts/graphs to study the progress of the project.
+  
+Task estimation:-
+Based on the project process model we are choosing estimation technics will differ.
+Waterfall model
+Iterative/Spiral model
+prototype
+------------------------- component based estimates - usually done through pre-defined estimation templates of the orgnization
+
+agile methodology
+There are different estimation technics are there based on agile methodology you are using like
+- story points
+- planning pocker
+etc
+
+Now once the estimates are provided, the developer has to study the requirement and has to write analysis document for the task he has been assigned with. The analysis document servers as proof of understanding the requirement, and helps us in filling any gap from requirement to understanding.
+Requirement analysis document contains below sections
+- description
+- Acronyms
+- Assumptions
+- Outstanding Items
+- Flowchart
+- Mockups
+- Data Fields and Validations
+- Table E-R model
+
+How to write analysis or various documents in the project, we need tools write the documentation.
+- Microsoft Word = documentation
+- Microsoft Visio = drawing flow charts, class diagram, UML modeling
+The above tools are not being used for documentation purpose right now, because those are not collaborative document tools, sharing the documentation is difficult replacing these the new era tools came into market
+  - confluence
+  - xwiki
+  - visual paradigm
+  - draw.io
+  
+During the project development stages, we use few storage management tools like
+File Servers
+  - File Zilla
+  - Box File Server
+File Clients
+  - File Zilla
+  - File Net
+  - Winscp
+  
+Now once the analysis document has been signed off, describe the process of implementation and what you are going to exactly build the developer has produce design document.
+sections of the design document  
+-overview
+-description
+-Acronyms
+-Assumptions
+-Class Diagram
+-Sequence Diagram
+-Activity Diagram
+-E-R Model
+-Psuedo code
+-Sql Queries
+In this way the whole requirement implementation will be documented as part of high level design document.
+  
+Testcases
+------------
+once we produce the right design, the developer has to write testcases. by writing testcases, the developer will understand what things has to be tested so that can produce the correct coding addressing all the testcases, so the chances of increasing the bugs can be minimized.
+  
+The testcases produced by the developer maynot be in par with qa, qa has to write their own testcases to test the application, but the developer testcases are meant for development team to help them in coding the application better.
+  
+The testcases written by the developer at this stage are called Unit Testcases. and we use tools to document these testcases and record the test executions using.
+  1. HP Quality Center
+  2. Mercury quality center
+  3. HP ALM
+
+big 50 pages -> testcases covering all the functionalities described in 50 pages? how do you ensure you idenfied testcases and wrote for all of those functionalities.
+Tracebility Matrix is an excel document / any tool in which we write each requirement/sub requirement no, use case no, sub usecaseno, section, testcase no
+After writing the testcases, the developer should fill the tracebility matrix to verify whether all the sections of requirement/usecases are covered through the testcases or not.
+  
+Coding/Implementation.
+during the time of development itself the programmer along with writing functinality he has produce unittest automation program also written in JUnit / TestNG or any other automation testing frameworks. which is called "Test Driven Development".
+  
+when the developer is developing the code, he has to write unittesting  code also on the development code, once the code has been arrived to an executable state 
+
+How to manage the source code of our application?
+Source Code Management Tools
+1. Winscp
+2. visual source safe
+3. pvcs
+4. subversion
+5. git
+
+What ide we use for facilitating the development?
+1. Eclipse
+2. Sts
+3. IntelliJ
+4. jdeveloper
+5. Netbeans
+
+what are the different server platforms available for deploying the applications?
+1. Tomcat
+2. weblogic
+3. websphere
+4. wildfly
+5. glassfish
+6. Jetty
+
+once we are done with development, after performing the unittesting before deliverying the code to qa for testing we need to perform code review.
+The purpose of code review process is
+  - to identify the code has been written in an optimistic way or not
+  - did we followed all the coding standards and guidelines in writing code
+  - did we adopted best practices as part of the coding  
+  - are they any common mistakes we have comitted as part of the code which might produce bugs in future
+  
+once developer completed the unit testing, after comitting the code into source code repository the developer shares the source code to the peer of his project asking to review the code. This is called "Peer-Review"
+  he or she will go through the source code and check the algorithm implementation of it and provides the comments indicating the flaws in the code.
+  
+In peer-review process it takes lot of time in reviewing the code, which delays the delivery of the code to qa. how to solve this problem
+That is where we have 2 types of code review process will be there
+  1. peer-review = it is done by other member in the team
+  2. static-code analysis tools = we use certain automation tools which will scans or reads the source code of our project will generate report indicating the common errors which might be encourted as part of the coding
+  There are lot of static-code analysis tools are available like
+    - FindBugs
+    - PMD
+    - SonarQube
+by using the static-code analysis tools we can reduce the peer-review time where in peer-review whether the algorithm approach we followed in implementing the requirement is correct or not funcationally, is it optimistic and adotped in best way or not will be verified by peer.
+common errors are identified by code-review tools
+---------------------------------------------------------------------------------------------------------
+static code analysis tools
+peer review process (aspects through which peer review will be done)
+
+test automation tools
+-> unit test automation tools
+-> in-container automation testing tools
+-> UI automation testing tools
+-> performance testing tools
+-> Security Testing tools
+
+code coverage tools
+
+database management systems
+bug reporting tools
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
