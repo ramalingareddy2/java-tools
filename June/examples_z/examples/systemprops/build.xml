@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="sysprops" basedir="." default="print">
+	<target name="print">
+		<echo>${user.name}</echo>
+		<echo>${java.specification.name}</echo>
+		<echo>${java.vm.name}</echo>
+		<echo>${java.version}</echo>
+		<echo>${os.name}</echo>
+	</target>
+</project>

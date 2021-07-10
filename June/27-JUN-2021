@@ -42,10 +42,120 @@ The build/deployment activites are seems to be performed repeatitively during th
 No, because humans are prone to perform mistakes, which leads to failure.
     
 How to solve the above problems?
-Looks like all the steps that has to perform in deploying and release the code across various environments seems to be constant and same. If this has been carried by the human, it takes lot of time and chances of failure also will be high.
-Since it is a repeatitive activity that has to conducted for multiple times instead of doing it manually we can automate the above process through programming.
+Since all the activities has to be perform repeatitive over the period of time across different environments, looks like everytime we need to perform same activities instead of we manually performing these operations one by one, we can automate the whole process by writing program.
+    
+If we can express the above job of performing the activities within a program, everytime when we want to perform the above activities, just run the program which will do a flawless job.
   
-we need to build automation tools?
+What is ANT?
+Ant stands for Another Neat Tool, prior to the ant there used to be make build tool for building an application.
+The make tool uses operating system routines for carrying the build activities so that the build works only on that platform it has been written for and will not work across the platforms, which is a big dis-advantage.
+
+So, replacing make, ant build tool has been introduced by apache. Ant is purely written in java language thus making it platform portable, which indicates the build activities are not being performed using operating system routines rather the ant has written java language instruction code to perform every operation.
+Ant is used for building java applications 
+
+
+What ANT has provided?
+1. ANT has provided an language for defining build instructions which has to be written in XML format.
+2. Provided bunch of libraries which contains code for reading and executing the tasks/activities defined within the XML.
+3. Utilities to launch the program
+
+
+How to write ant instruction file for building an application?
+ANT build instruction file has to be written in XML language document. For each build activity we want to perform ANT has provided a pre-defined tag (task tag), we need to write task declaration in building instruction file. So that ant reads the XML task tags and executes the relevant Task programs of the ANT.
+  
+These tasks may have dependency on each other, for eg if a task has executed successfully then execute the other task. How to express dependencies between the tasks.
+That is where combile all the tasks to be executed together to accomplish a work and define dependency between them by wrapping into a <target>
+
+Target = is a piece of work we want to accomplish for which we might have to execute multiple tasks. As a piece of work is indicated by a target we can express dependencies between the targets.
+  
+So we need to write all the targets in a root element called <project> indicating execute all the targets to perform the build of a project
+
+build.xml 
+<?xml version="1.0" encoding="utf-8"?>
+<project name="firstant">
+  <target name="print">
+    <echo>Ant program</echo>
+  </target>  
+</project>
+in ant we need to save the build instruction file with default name as "build.xml".
+  
+How to execute the build file?
+Lets install ant to run the build file. we require jdk 1.8 minimum for ant version  apache-ant-1.10.10-bin.zip .
+  
+1. download the ant zip file using this link https://mirrors.estointernet.in/apache//ant/binaries/apache-ant-1.10.10-bin.zip
+2. extract the zip file which will creates apache-ant-1.10.10 directory
+3. copy into c:\ drive
+4. Goto environment variables create a new variable called ANT_HOME=c:\apache-ant-1.10.10
+5. Add ANT_HOME\bin to system path as %ANT_HOME%\bin directory so that we can run ant utility anywhere.
+
+Where do we need to place our build instruction file?
+Always keep your build instruction file under the root directory of your java project since you are writing build instructions for executing your project.
+  
+JavaProgram (java project)
+|-src
+ |-*.java
+ |-config.xml
+|-bin
+ |-*.class
+|-build.xml
+so that within build.xml we can refer all the files of our project easily using relative path
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
   
   
   

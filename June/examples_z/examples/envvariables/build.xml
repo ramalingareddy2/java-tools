@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="envvars" basedir="." default="envprint">
+	<property environment="env"/>
+	
+	<target name="envprint">
+		<echo>Java Home: ${env.JAVA_HOME}</echo>
+		<echo>Maven Home: ${env.MAVEN_HOME}</echo>
+	</target>
+</project>
