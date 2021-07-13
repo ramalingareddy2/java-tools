@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="staffmgmt" basedir="." default="init">
+	<property file="build.properties" />
+
+	<tstamp>
+		<format property="build.Number" pattern="dMMYYYYHHmmss" />
+	</tstamp>
+
+	<path id="libclasspath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<condition property="jdk9">
+		<equals arg1="${java.version.required}" arg2="${ant.java.version}" />
+	</condition>
+
+	<target name="init" depends="checkJdkVersion,clean,createdirs,compile,package,run">
+	</target>
+
+	<target name="checkJdkVersion" unless="jdk9">
+		<fail message="Jdk 9 is required" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${classes.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${build.dir}" />
+	</target>
+
+	<target name="createdirs">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<target name="compile">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" classpathref="libclasspath" />
+
+		<copy todir="${classes.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/*.properties" />
+			</fileset>
+
+			<filterset begintoken="#{" endtoken="}">
+				<filter token="driverClassname" value="${driverClassname}" />
+				<filter token="url" value="${url}" />
+				<filter token="dbuser" value="${dbuser}" />
+				<filter token="dbpassword" value="${dbpassword}" />
+			</filterset>
+		</copy>
+	</target>
+
+	<target name="package">
+		<jar basedir="${classes.dir}" destfile="${dist.dir}${file.separator}${ant.project.name}-${build.Number}.jar" />
+	</target>
+
+	<target name="run">
+		<java classname="com.staffmgmt.test.StaffMgmtTest">
+			<classpath>
+				<path refid="libclasspath"/>
+				<pathelement location="${dist.dir}${file.separator}${ant.project.name}-${build.Number}.jar" />
+			</classpath>
+		</java>
+	</target>
+</project>
+
+
+
+
+
+
+
+
+
+
+
+

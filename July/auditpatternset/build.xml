@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="patternset" basedir="." default="copyfiles">
+
+	<patternset id="fillingpattern">
+		<include name="**/*.audit" />
+		<include name="**/*.ledger" />
+	</patternset>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="filling">
+				<patternset refid="fillingpattern" />
+			</fileset>
+		</delete>
+	</target>
+	
+	<target name="copyfiles" depends="clean">
+		<copy todir="filling">
+			<fileset dir="dmart">
+				<patternset refid="fillingpattern" />
+			</fileset>
+			<fileset dir="spencer">
+				<patternset refid="fillingpattern" />
+			</fileset>
+			<fileset dir="wallmart">
+				<patternset refid="fillingpattern" />
+			</fileset>
+		</copy>
+	</target>
+</project>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="copyproject" basedir="." default="copyimages">
+	<target name="clean">
+		<delete>
+			<fileset dir="publishedimages">
+				<include name="**/*.jpg"/>
+				<include name="**/*.png"/>
+			</fileset>
+		</delete>
+	</target>
+	<target name="copyimages" depends="clean">
+		<copy todir="publishedimages">
+			<fileset dir="images">
+				<include name="**/*.png" />
+				<include name="**/*.jpg" />
+			</fileset>
+		</copy>
+	</target>
+</project>

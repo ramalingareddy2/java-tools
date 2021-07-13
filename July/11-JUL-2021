@@ -1,0 +1,8 @@
+Ant Datatypes
+These are the predefined types provided by the Ant to hold File information or Patterns. There are 4 DataTYpes are there
+1. fileset
+2. filelist
+3. patternset
+4. filterset
+
+
