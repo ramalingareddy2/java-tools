@@ -1,0 +1,4 @@
+#{publisheddate}
+#{publisher}
+#{place}
+The girl next door is in next book

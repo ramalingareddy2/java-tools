@@ -1,0 +1,427 @@
+1. How to write an Ant build script
+2. How to run a java program using Ant build
+
+3. Variables in ANT
+There are 4 types of variables are supported by ANT
+1. environment variables
+<property environment="env"/>
+${env.PATH}
+
+2. System properties
+System Properties are JVM variables, that holds the environment information on which your java programs are running. Since ANT is a build program that runs on Jdk we can access all the System Properties in the ANT build script.
+${systemPropertyName}
+
+3. Ant variables
+predefined variables provided by ANT system. These holds Ant environment information in which the build is conducted.
+ant.version
+ant.home
+ant.lib.core
+ant.library.path
+ant.project.default-target
+ant.project.name
+ant.build.file
+ant.java.version
+basedir
+
+4. User Defined variables
+variables defined by the programmer of the build script are called user defined variables.
+There are 2 ways we can declare user-defined variables
+4.1 property tag
+<property name="key1" value="value1"/>
+
+4.2 property file
+<property file="build.properties"/>
+-------------------------------------------------------------------------------------------------------
+#4 how to package an application as executable jar and ship it
+
+<target name="compile">
+  <javac srcdir="${src.dir}" destdir="${classes.dir}"/>
+  <copy file="${src.dir}${file.separator}pincodes.properties" todir="${classes.dir}"/>
+</target>
+<target name="package">
+  <jar basedir="${classes.dir}" destfile="${dist.dir}${file.separator}${ant.project.name}-${build.number}.jar">
+    <manifest>
+      <attribute name="Main-Class">com.MainClass</attribute>
+    </manifest>
+  </jar>
+</target>
+--------------------------------------------------------------------------------------------------------
+#5 Condition Property
+
+create variable based on condition provided inside. if java.required and ant.java.verion matches jdk9 variable will be created otherwise not  
+<condition property="jdk9">
+  <equals arg1="${java.required}" arg2="${ant.java.version}"/>
+</condition>
+
+if jdk9 variable/property is not available then execute checkJdkVersion target
+<target name="checkJdkVersion" unless="jdk9">
+  <fail message="jdk version mismatch"/>
+</target>
+
+after fail, build will be aborted.
+-------------------------------------------------------------------------------------------------------
+#6 DataTypes in Ant
+DataTypes are the complex variable declarations that typical holds bunch of filenames, paths or patterns which can be used as inputs in performing the task executions in ant.
+  
+There are 4 DataTypes supported by ANT
+1. fileset
+2. filelist
+3. filterset
+4. patternset
+
+#6.1 fileset = using fileset we can point to a set of files on which we want to execute an Task.
+  
+advertise
+|-images
+  |-icons
+    |-logo.jpg
+    |-furniture.png
+  |-apple.jpg
+  |-oranges.jpg
+  |-papaya.png
+  |-grapes.png
+  |-watermelon.gif
+  |-banana.gif
+|-published_images
+  |-icons
+    |-logo.jpg
+    |-furniture.png
+  |-apple.jpg
+  |-oranges.jpg
+  |-papaya.png
+  |-grapes.png
+  |-watermelon.gif
+  |-banana.gif
+
+copy all the jpg and png images into published_images directory
+<target name="copyimages">
+  <copy file="images/apple.jpg" todir="published-images"/>
+  <copy file="images/oranges.jpg" todir="published-images"/>
+  <copy file="images/papaya.png" todir="published-images"/>
+  <copy file="images/grapes.png" todir="published-images"/>  
+</target>
+
+
+
+
+tomorrow more jpg and png images added, again we need to modify the build script, instead how to pick the files of png/jpg type and copy from source to destination
+We can use fileset datatype to accomplish it more easily, we can ask fileset to prepare set of filenames based on the matching pattern and pass to copy task asking the set of files in that fileset copy them.
+  
+<target name="copyimages">
+  <copy toDir="published_images">
+    <fileset dir="images"> // prepare set of files to be copied based on condition/pattern
+      <include name="**/*.jpg"/>
+      <include name="**/*.png"/>
+    </fileset>
+  </copy>
+</target>
+
+? = match with one character
+* = match with any number of characters
+** = look into subdirectories as well.
+
+#6.2 filelist
+fileset builds set of file locations based on the include/exclude pattern provided. but if we want to make a fixed list of files on which we want to perform a task then we need to use filelist
+
+
+  
+advertise
+|-images
+  |-icons
+    |-logo.jpg
+    |-furniture.png
+  |-apple.jpg
+  |-oranges.jpg
+  |-papaya.png
+  |-grapes.png
+  |-watermelon.gif
+  |-banana.gif
+|-published_images
+  |-icons
+    |-logo.jpg
+    |-furniture.png
+  |-apple.jpg
+  |-oranges.jpg
+  |-papaya.png
+  |-grapes.png
+  |-watermelon.gif
+  |-banana.gif
+
+i want to copy only apple.jpg, oranges.jpg and grapes.png
+
+<copy todir="publishedimages">
+  <filelist dir="images">
+    <file name="apple.jpg"/>
+    <file name="oranges.jpg"/>
+    <file name="grapes.png"/>
+  </filelist>
+</copy>
+
+#6.3 patternset = patternset allows us to build patterns or we hold patterns in the patternset that can be used in fileset or filterset 
+
+<patternset id="pt1">
+  <include name="**/*.png"/>
+  <include name="**/*.jpg"/>
+</patternset>
+
+<fileset dir="images">
+  <patterset refid="pt1"/>
+</fileset>
+
+
+animalimages
+homeimages
+peopleimages
+
+target -> finalimages
+<patternset id="pt1">
+  <include name="**/*.png"/>
+  <include name="**/*.jpg"/>
+  <include name="**/*.gif"/>
+</patternset>
+  
+<copy todir="finalimages">
+  <fileset dir="animalimages">
+    <patternset refid="pt1"/>
+  </fileset>
+</copy>
+
+<copy todir="finalimages">
+  <fileset dir="homeimages">
+    <patternset refid="pt1"/>
+  </fileset>
+</copy>
+
+<copy todir="finalimages">
+  <fileset dir="peopleimages">
+    <patternset refid="pt1"/>
+  </fileset>
+</copy>
+
+#6.4 filterset
+filterset works along with copy task, if we want to replace tokens in a file with values while copying the files from one location to another we can use filterset.
+  
+search for these filters (tokens) while copying the file and replace them with supplied values.
+  
+books
+  |-wingsoffire.txt
+  |-secret.txt
+  |-girlnextdoor.txt
+|-printing
+|-build.properties
+
+
+wingsoffire.txt
+#{publisheddate}
+#{publisher}
+#{place}
+Wings of fire is written by Mr.Abdul Kalam
+
+secret.txt
+#{publisheddate}
+#{publisher}
+#{place}
+Absolute secret so nothing is there
+
+girlnextdoor.txt
+#{publisheddate}
+#{publisher}
+#{place}
+The girl next door is in next book
+
+
+build.properties
+publisheddate=10/01/2021
+pusbliher=pbp publications
+place=mumbai
+
+build.xml
+<copy todir="printing">
+  <fileset dir="books">
+    <include name="**/*.txt"/>    
+  </fileset>
+  <filterset begintoken="#{" endtoken="}">
+    <filter token="publisheddate" value="${publisheddate}"/>
+    <filter token="publisher" value="${publisheddate}"/>
+    <filter token="place" value="${place}"/>
+  </filterset>
+</copy>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="userdefinedvars" basedir="." default="print">
+	<property name="build.version" value="1.0"/>
+	<property name="author.name" value="Sriman"/>
+	<target name="print">
+		<echo>${build.version}</echo>
+		<echo>${author.name}</echo>
+	</target>
+</project>

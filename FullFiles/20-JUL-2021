@@ -1,0 +1,159 @@
+Features of Maven
+------------------
+1. Standardized Directory Structure
+2. Dependency Management
+3. Plugins
+4. Build Abstraction
+5. Tools Support
+6. Archetypes
+
+#1. Standardized Directory Structure
+Every project that we build with maven should be created with standardized directory structure which means, the same number of directories with the same name across all the projects. There are plenty of advantages in following the Standardized directory structure.
+  1. We dont have to write the build script for each and every project describing the directory layout of our project in building by using maven unlike ant. The process of building an application is same for all the java projects (for a projectType), and the directory structure is common, so maven itself can quickly carry out the build actions/activities on the project, if we declare information about the project.
+  2. developers can easily work across any of the projects or even multiple projects parallely without the need of spending the time on understanding the project structure and the build process
+  3. since the directory structure across the projects are same, developers can use the ide of their choice in developing the application
+  
+
+Maven Installation
+-------------------
+Maven has been distributed as a binary distribution which we need download a zip file extract and place in the system path.
+  1. download the zip file from below link
+  https://mirrors.estointernet.in/apache/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.zip
+  2. extract and copy the zip file into c:\drive
+  c:\apache-maven-3.8.1-bin
+  3. create environment variables under system
+    M2_HOME=c:\apache-maven-3.8.1-bin (older variable no more needed)
+    MAVEN_HOME=c:\apache-maven-3.8.1-bin
+    set PATH=%PATH%;%MAVEN_HOME%\bin
+-------------------------------------------------------------------------------------------------------- How to build an java project using maven?
+In Ant we need to write build script in which we need to write build instructions on what operations has to carried in building an application. where as while working with maven, we only define the information about the project, we never need to write build scripting asking to perform build activities to build a project, thus maven is called "declarative build management tool".
+
+Since maven takes care of performing the build activities for our project, we need to define information about our project, to let maven determine what activities to be applied. We follow standardized directory structure in creating the project and write information about the project in a standard file called "pom.xml"
+  
+pom.xml stands for project object model, which means project informational file, in which we need to delcare 4 mandatory properties to build an basic application.
+
+A pom also has version independent of maven version, which indicates the number of times the pom file structure has been modified the maven developers. 
+  
+pom.xml
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <modelVersion>3.0.0</modelVersion>
+  <groupId>organization domain</groupId>
+  <artifactId>project name</artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+</project>
+  
+For every project we build with maven, we need to define 3 attributes called "gav coordinates" as below.
+groupId = organization for which we are developing the project
+aritifactId = project name itself
+version = version/release of the project major.minor.incremental
+using the gav coordinates we can uniquely identify the project.
+  
+In addition to writing the pom.xml we need to create the project with standard directory layout as described below.
+project
+|-src
+  |-main
+    |-java
+    |-resources
+|-test (optional) (if we dont have unittest cases)
+  |-main
+    |-java
+    |-resources
+|-pom.xml
+|-target
+  |-classes
+  
+In maven we have 2 source directories src and test. The production deployable code will be kept under src directory and the unit testcases will be placed under test directory.
+src\main\java = the java source code should be kept here
+src\main\resources = any non java resources\files which doesnt require compilation but should be packaged as part of the application since it is required during execution should be placed under this directory.
+  
+  
+pincodefinder
+|-src
+  |-FindPincode.java
+  |-pincodes.properties
+  
+pincodes.properties (source code)
+andhrapradesh=39300
+maharastra=29203
+  
+class FindPincode {
+  public static void main(String[] args) {
+    Properties props = new Properties();
+    props.load(FindPincode.class.getClassLoader().getResourceAsStream("pincodes.properties"));
+    // we are finding the pincodes.
+  }
+}  
+Source Code = The inputs/files/code required for running an application contributes to the source code of the project.
+during compilation, we only need to compile the .java code but during shipping the project (jar), we need to place all the files that contributes to the source code to run the application.
+  
+pincodefinder.jar
+|-FindPincode.class
+|-pincodes.properties
+
+So maven while packaging the application should copy the properties/xml that contributes as the source code of your project into the jar/war of the project. To let the maven identify the java source from others we place them into 2 directories
+src/main/java = compile and package
+src/main/resources = dont compile but package within the jar/war
+by separating them into 2 directories we can quickly locate java files from other source code.
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+Features of Maven
+1. Standardized directory structure
+2. Dependency management
+3. Plugins
+4. Build Abstraction
+5. Tools support
+6. Archetypes
+
+#2. Dependency Management
+Maven address the problem of dependency management, by providing Maven Central Repository. Its the place where all opensource software contributors can publish their artifacts and distribute them to the world.
+
+How do we identify the dependencies/artifacts and use them uniquely to build a project?  
+Since several organizations produces different libraries which may have conflicting names, identifying them and using would become tedious process. Maven has introduced gav coordiantes to uniquely identifying the aritifacts.
+  g = groupId     = organization name who owns the artifact
+  a = artifactId  = library / project name you are distributing
+  v = version     = version of the artifact
+  t = type        = what type of artifact (jar/war/pom)
+
+How do we build a project by using these dependencies?
+We dont have to download the dependencies, set the classpath to build an application while work with maven, because we endup again into same problems we discussed earlier.
+  
+Maven has introduced declarative dependency management, where what dependencies are required for building an application, the developer has to define that within pom.xml
+There are several advantages:-
+  1. since the pom.xml is part of your source code and is pushed into scm repository and distributed to the whole team, the entire build information about the project is in one place and every knows what to do
+  2. as we defined all of the dependencies within pom.xml, maven itself can help us in downloading those dependencies from maven central repository, add to the classpath of the project and build the project, so we dont need to download the dependencies manually which saves lot of time.
+    
+Where do we need to declare the dependencies in pom.xml?    
+<project>
+  <groupId/>
+  <artifactId/>
+  <version/>
+  <packaging/>
+  <dependencies>  
+    declare all the dependencies that are required to build you project here
+  </dependencies>
+</project>
+    
+How to find the dependencies/artifacts and know their gav coordiantes to include as part of pom.xml?
+we can goto maven central repository (https://mvnrepository.com) and search for the dependency which gives you the dependency information and let you browse in accessing the gav coordinates of the dependency.
+                                      
+How many types of repositories are there in maven?
+There are 3 types of repositories are there
+1. Maven Central Repository
+2. Remote Repository / Corporate Repository
+3. Local Maven Repository
+
+1. Maven Central Repository = Public repository where people distribute their libraries, we can search for them and consume in a project by declaring as dependencies within pom.xml of a project.
+2. Local Maven Repository = The directory location on the developers machine where all the downloaded artifacts from the maven central repository are kept and referred across the projects. So that duplicate copy of the dependencies are not kept for each project and saves huge disk space on the developers machine.
+The default location of the local repository: $USER_HOME/.m2
+when we do the maven build first-time on our machine, maven takes care of automatically setting up the local maven repository by default at the location $USER_HOME/.m2 and downloads all the artifacts from central repository and place in local repo.
+Subsequently when we build a project maven tries to refer the dependencies from the local repo if those are available for any of the projects we build on the same machine, so that it avoid downloading and placing multiple copies of it.
+                                      
+                                      
+                                    
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

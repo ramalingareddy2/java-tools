@@ -1,0 +1,194 @@
+Maven
+1. Standardized directory Structure
+2. Dependency Management
+3. Plugins
+4. Build Abstraction
+5. Tools Support
+6. Archteypes
+-------------------------------------------------------------------------------------------------------
+#1 Standardized Directory Structure
+-----------------------------------
+Why do we need Standardized Directory Structure
+
+build.xml
+<project name="hcm" basedir="." default="init">
+  <path id="classpath">
+    <fileset dir="${lib}">
+      <include name="*.jar"/>
+    </fileset>
+  </path>
+  <target name="init" depends="clean, createdirs, compile, package, run"/>
+  <target name="clean">
+     <delete dir="build/classes"/>
+     <delete dir="build/dist"/>
+     <delete dir="build"/>
+  </target>
+  <target name="createdirs">
+    <mkdir dir="build"/>
+    <mkdir dir="build/classes"/>
+    <mkdir dir="build/dist"/>
+  </target>
+  <target name="compile">
+    <javac srcdir="src" destdir="classes" classpathref="classpath"/>
+  </target>
+  <target name="package">
+    <jar basedir="classes" destfile="build/dist/${ant.project.name}.jar"/>
+  </target>
+  <target name="run">
+    <java classname="Test">
+      <classpath>
+        <path refid="classpath"/>
+        <pathelement path="build/dist/${ant.project.name}.jar"/>
+      </classpath>
+    </java>
+  </target>
+</project>
+
+build.xml
+<project name="roadsAndContractsManagement" basedir="." default="init">
+  <target name="init" depends="clean, createdirs, compile, package, run"/>
+  <target name="clean">
+    <delete dir="bin/classes"/>
+    <delete dir="bin/target"/>
+    <delete dir="bin"/>
+  </target>
+  <target name="createdirs">
+    <mkdir dir="bin"/>
+    <mkdir dir="bin/classes"/>
+    <mkdir dir="bin/target"/>
+  </target>
+  <target name="compile">
+    <javac srcdir="src/java" destdir="bin/classes"/>
+  </target>
+  ...
+</project>
+
+From the above we can clearly understand, the way we need to build the java projects and tasks that should be applied in building the projects would be same across all the projects, but still the developer has to endup in repeatedly writing the build script for every project referring to the directory structure where the files are located.
+
+if we can standardize the directory structure for each java project we create 
+1. Then we dont need to tell what tasks/targets should be applied for building an java project since for all the java projects the process of building same.
+2. since all the projects has same directory structure, we dont need to write a build script pointing the directory locations where the files can be located.
+  
+Now we only need to provide information about our project like name of the project and version etc, apart from that we dont need describe the directory structure or the tasks to be applied that is where maven comesup with standardized directory structure.  
+Thus maven making an declarative build management tool unlike ant being an build script tool.
+  
+There are plenty of advantages with standardized directory structure
+  1.
+  The developer has to go through the directory structure of the project to identify where the files are located and has to go throught the build script written for the project in understanding what tasks/targets are applied in building the project if there is not standard directory structure.
+  If we moves to a different project the above process has to be repeated, which seems to be tedious job and developer endup in spending too much amount of time in understanding the project and the build process which kills the productivity of the developer. 
+  If we can have standardized directory structure with no time the developer can quickly work across any number of projects since all the projects has same targets in building, he dont need to go through any complex build script in understanding the build process as well.
+    
+  2.   
+  different ide's has different directory structure over which the projects are created, now if we create a project with eclipse ide the directory structure over which the project will be created will be specific to the eclipse and we cannot switch to another ide of our choice.
+  So different developers in a team has different backgrounds of working and want to use differents ides of the their preference in developing the project which is not possible.
+  Instead if we follow the standardized directory structure across all the java projects irrespective of the ides we are using, the we can easily switch from one ide to another of our choice, that is flexibility we get with standardized directory structure.
+  3.
+  if we have standardized directory structure we dont need to tell the build tool
+    1. how the project has to build (no build script required) since for every java project the process of build is same
+    2. dont need to declare the information about the directories/files of the project as all the projects has same directory structure thus making us free from writing annoying build scripts for every project.
+      
+    
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

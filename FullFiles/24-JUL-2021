@@ -1,0 +1,113 @@
+How many types of repositories are there in maven?
+Three types of repositories are there
+1. Maven Central Repository
+2. Remote Repository
+3. Local maven repository
+
+#1. Maven Central Repository = publicly hosted by maven where all the opensource software manufacturing vendors publish their artifacts into it. any one can use the artifacts/libraries in their project by integrating into their maven builds.
+  
+#2. Local Maven Repository = When we run the maven build, the maven downloads all the artifacts/dependencies specified in the pom.xml and placed them on the developer machine on a common filesystem location under $USER_HOME/.m2 directory which is called "Local Maven Repository". The main advantage is maven can reuse the same libraries across the projects being build on the same machine without duplicating the libraries for each project, which saves huge amount of diskstorage.
+  
+#3 Remote Repository:-
+In a organization there are many developers working on the projects, if each of them are conducting the build process, all of these are going to pull the dependencies from maven central repository where huge amount of internet bandwidth consumption will inccurr and due to the high volumes of network traffic, the network congession will happen. This will eventually leads to slowness or failure in build process.
+  
+Many of the corporates due to their security and confidentiality reasons they would now allow the developers workstations to have a direct public internet connection. in such case they people cannot build their applications using maven central repository
+
+Due to policy restrictions of the company they want stay away from usage of certain libraries which cannot be controlled when a direct access to the maven central repo is permitted.
+ 
+How can we overcome these problems?
+That is where maven introduced the concept of Remote Repositories.
+---------------------------------------------------------------------------------------------------------
+Transitive dependencies
+While working on java projects, we need to use third-party libraries in developing the application. The libraries we are using inturn might dependent on someother external thirdparty libraries. unless in our project we include the libraries and their dependents our code will not work, these inturn library dependencies are called "Transitive dependencies"
+  Project -> Library X  ----------- [Transitive dependencies]
+              |-Library Y
+              |-Library Z
+                |-Library F
+                |-Library C
+              |-Library P
+              
+Each library we use inturn dependents on another library and the level of nesting can goto any extent. Now developer while setting up the project should identify which libraries we need to build the project, what are their trasitive dependent libraries and their version compatibility to build a project.
+This is going to take too much amount of time by going in rounds of trail/error to identify the dependencies and their transitive dependencies with compatible versions. If there is future upgrade comes then the whole process has to be revisited.
+  
+So to address the above problem maven introduced Transitive dependencies.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+              
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

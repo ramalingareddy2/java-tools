@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="copyprojectfilelist" basedir="." default="copyimages">
+	<filelist dir="images" id="myimages">
+		<file name="5.jpg" />
+		<file name="4.jpg" />
+		<file name="girl.gif" />
+	</filelist>
+
+	<target name="clean">
+		<delete>
+			<fileset dir="publishedimages">
+				<include name="**/*" />
+			</fileset>
+		</delete>
+	</target>
+
+	<target name="copyimages" depends="clean">
+		<copy todir="publishedimages">
+			<filelist refid="myimages" />
+		</copy>
+	</target>
+</project>

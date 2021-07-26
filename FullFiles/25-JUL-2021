@@ -1,0 +1,439 @@
+Features:
+1. Standardized directory structure
+2. Dependency Management
+3. Plugins
+4. Build Abstraction
+5. ToolsSupport
+6. Archetypes
+
+#2 Dependency Management
+  2.1 Repositories
+    - Maven Central Repository
+    - Remote Repository
+    - Local Repository
+  2.2 Dependency Indentification Process
+  2.3 Transitive dependency
+  2.4 How does maven resolve the version conflicts that arises between transitive dependencies?
+      Dependency Mediation Technic
+        - top to the tree
+        - left 
+  2.5 How do we exclude an transitive dependency?
+      mvn dependency:tree = all the dependencies of our project and their transitive dependencies
+      <exclusions>
+      </exclusions>
+  2.6 dependency scopes
+      - compile (default) = all phases of the build
+      - provided          = use while compiling, dont package
+      - test              = for unit test source
+      - runtime           = dont include while compiling but package it at runtime
+      - import            = reusing other pom dependencies
+      - system (deprecated)
+  
+  2.7 how to use an external dependency jar of our local filesystem in a maven project?
+      we need to use a plugin mvn install:install-file 
+      mvn install:install-file -DgroupId= -DartifactId= -Dversion= -Dfile= -Dpackaging -DgeneratePom=true
+---------------------------------------------------------------------------------------------------------
+#3 Archetypes
+While working with maven, we need to follow standardized directory structure in creating the projects, so that maven takes care of performing the build activities for our project.
+
+1. src/main/resources = resources like xml, properties, yml etc that contributes to the source code of our project
+2. src/main/config = configuration files (not packaged as part of your project)
+3. src/main/scripts = scripts that are required for administrators or developers
+4. src/main/webapp = public resources of the web application can be placed and distributed
+5. src/it = intergation tests
+6. src/main/db = database scripts
+7. src/site = site documentation
+
+project
+|-src
+  |-main
+    |-java
+    |-resources
+    |-config
+    |-scripts
+    |-db
+    |-webapp
+      |-WEB-INF
+        |-web.xml
+  |-it
+  |-site
+|-test
+  |-main
+    |-java
+    |-resources
+|-pom.xml
+|-target
+  |-classes
+  
+In order to work with maven, we must and should create the project based on the standard directory layout defined by the maven, manually creating these directories each time while working on the project is tedious job. How to solve this problem of creating the project?
+
+So to overcome the above problem maven has provided archtypes.
+Archetypes: are pre-built project templates, containing standard directory structure of a maven project, which we can use it in quickly creating an maven project. The archetypes contains empty directory layout and a token based pom.xml with standard information defined. Now developers can browse these templates from central repository, unzip and replace the pom.xml with our project information to start with.
+
+Since there are multiple project types we develop in general, maven has provided different archetypes that suites the project type we are developing. each maven archetype starts with maven-archetype-*
+
+maven-archetype-quickstart  - core java project
+maven-archetype-j2ee-simple - j2ee application
+maven-archetype-webapp      - web applications
+maven-archetypes-mojo       - plugin development
+maven-archetype-archetype   - to create an archetype project
+
+even though archetypes (pre-build project templates) are provided, using them seems to be difficult job, every time we need to extract and modify the pom file reflecting our project information takes good amount of time, so how can we overcome this problem?
+
+maven has provided an utility or plugin called mvn archetype:generate, we can specify the gav coordinates of our project to the tool asking to generate the project pom configuration.
+
+mvn archetype:generate -DgroupId=g1 -DartifactId=a1 -Dversion=v1 -DarchetypeGroupId= -DarchetypeArtifactId -DarchetypeVersion=
+
+while using maven standard archetypes we can ignore archetypeGroupId and archetypeVersion
+mvn archetype:generate -DgroupId=g1 -DartifactId=a1 -Dversion=v1 -DarchetypeArtifactId=maven-archetype-quickstart
+
+Custom Archetypes in Maven
+---------------------------
+Always creating an maven project with base archetypes provided by the maven is difficult job, because we only get base project layout with default elements in pom.xml. Now developer has to add dependencies and plugin configuration based on the technology of the project he is working on.
+
+So to overcome the above problem, there are lot of third-parties building their own archetypes and publishing into maven central repository. Now we can choose any of the archtypes available in the central repository that best suite your project requirement and can use it directly in creating the project.
+
+
+In case if we are not able to find a suitable archetype for our project requirement, we can also can create our own archetype and publish into our local maven repository/remote repository and can be reused for creating our own projects.
+
+How to create our own archetype?
+There are 2 ways of creating our own archetype.
+#1 use maven-archetype-archetype project for creating our own archetype from scratch
+#2 we can create our own archetype from an existing maven project (quick) (approach)
+
+#2 create archetype from existing maven project
+
+1. let us create an project with standard archetype based on the type of the project
+mvn archetype:generate -DgroupId=leawy.com -DartifactId=spring-core -Dversion=1.0.0 -DarchetypeArtifactId=maven-archetype-quickstart 
+
+spring-core
+|-src
+  |-main
+    |-java    
+      |-Test.java
+        |-BeanFactory factory = new XmlBeanFactory(new ClassPathResource("a-.xml"));
+    |-resources
+      |-application-context.xml
+|-test
+  |-main
+    |-java    
+|-pom.xml
+  |-dependencies:
+    |-spring core
+|-target
+  |-classes
+|-generated-sources
+  |-archetype
+
+spring-core (be in root)
+mvn archetype:create-from-project
+after running this command it generates an directory called generated-source\archetype in which the project archetype directory structure will be created with standard archetype descriptors.
+
+archetype
+|-pom.xml  (archetype pom)
+|-src
+  |-main    
+    |-resources      
+      |-archetype-resources (sources using which project will be generated)
+        |-pom.xml (project pom)
+        |-src
+          |-java
+            |-Test.java
+              |-BeanFactory factory = new XmlBeanFactory(new ClassPathResource("a-.xml"));
+          |-resources
+            |-application-context.xml
+      |-META-INF
+        |-maven
+          |-archetype-metadata.xml (describes the directories to be included in the project while creating)
+          
+d:\archetype:/> maven clean install
+---------------------------------------------------------------------------------------------------------
+Customizing Maven Installation
+we can customize the maven installation like 
+  - changing the default directory location of the maven local repo
+  - adding remote repositories information to maven, so that maven pulls the dependencies from remote repository rather than central maven repository
+  
+create an settings.xml file under $USER_HOME/.m2 directory because by default maven always goes to default repository, so if we have places settings.xml under that location, it reads the configuration and customize itself while executing.
+
+settings.xml (documentation)
+
+<settings>
+  <localRepository>d:\repo</localRepository>
+  <interactiveMode></interactiveMode>
+  <usePluginRepository/>
+  <offline/>
+  <pluginGroups/>
+  <servers/>
+  <mirrors/>
+  <proxies/>
+  <profiles/>
+  <activeProfiles/>
+</settings>
+  
+Laptop
+  -> office -> remote repository
+  -> home -> central
+
+<servers>
+  <server>
+    <username>sforce-repo-user</username>
+    <password>AP3RShaxasPAeoMVcSjJDxTSBxj</password>
+    <id>ibmreposerver</id>
+  </server>    
+</servers>
+<profiles>
+  <profile>
+    <id>office</id>
+    <repositories>
+       <repository>        
+        <id>ibmreposerver</id>
+        <name>ibmrepo</name>
+        <url>http://www.repo.s-force.org/artifactory/sforce-virtualrepo</url>
+      </repository>
+    </repositories>
+  </profile>
+  
+  <profile>
+    <id>home</id>
+    <repositories>
+       <repository>                
+        <name>central</name>
+        <url>http://www.repo.mvn.com</url>
+      </repository>
+    </repositories>
+  </profile>
+</profiles>
+<activeProfile>
+  <id>office</id>
+</activeProfile>
+
+mvn clean verify -P home
+--------------------------------------------------------------------------------------------------------
+standardized directory structure
+dependency management
+archetypes
+tools support
+
+--------------------------------------------------------------------------------------------------------
+
+Plugins:-
+Plugin is a maven java component/class which acts as an basic building block in maven build process. for each build activity there is a plugin that performs the operation.
+
+
+For addressing the common build activities that we need to perform for binding a project like
+  - clean
+  - compile
+  - junit test execution
+  - packaging
+  - deploying 
+  etc
+maven has provided plugins which are used for carrying the default activities.
+
+We have come across few plugins till now:
+archetype plugin
+install plugin
+
+A plugin can have multiple goals which can be provide different functionality. How to run a plugin?
+We can run a plugin in 2 ways.
+1. we can associate a plugin as part of the maven build
+2. we can run a plugin manually using mvn command directly.
+
+mvn archetype:generate -DgroupId
+    (plugin)  (goal)
+    archetype:create-from-project
+              (goal)
+              
+mvn install:install-file -DgroupId -Dartifact
+---------------------------------------------------------------------------------------------------------
+
+Build Lifecycle 
+There are 3 built in lifecycles are there in maven
+  1. default
+  2. clean
+  3. site
+  
+default lifecyle
+-validate 
+-compile  
+-test
+-package
+-integration-test
+-verify
+-install
+-deploy
+
+clean lifecycle
+-clean
+  |-clean plugin:clean
+
+site lifecycle (document)
+-site
+  |-site plugin:site
+  
+
+mvn lifecycle:phase lifecycle:phase lifecycle:phase
+
+There are 2 types of plugins are there in maven
+- build plugins
+- reporting plugins
+
+pom.xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId/>
+  <artifactId/>
+  <version/>
+  <packaging/>
+  <dependencies>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <source>1.9</source>
+          <target>1.9</target>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

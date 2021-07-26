@@ -1,0 +1,4 @@
+#{publisheddate}
+#{publisher}
+#{place}
+Wings of fire is written by Mr.Abdul Kalam

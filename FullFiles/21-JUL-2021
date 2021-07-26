@@ -1,0 +1,141 @@
+Features of Maven
+1. Standardized Directory Structure
+2. Dependency Management
+3. Plugins
+4. Build Abstraction
+5. Tools Support
+6. Archetypes
+
+#1 Standardized Directory Structure
+The maven has defined standard directory structure that should be used for creating an project. So that we can define the information about the project, we dont need to write build script to build the project.
+advantages:-
+  1.1 No need to write the build script for the project 
+  1.2 developer find it easy to work across multiple projects easily
+  1.3 agnostic to ide
+  
+layout of maven project
+-----------------------
+projectdirectory
+|-src
+  |-main (production source code)
+    |-java (compilable java source code)
+    |-resources (non java source code)
+|-test (unittest case source code)
+  |-main
+    |-java
+    |-resources
+|-pom.xml
+|-target
+  |-classes
+  
+pom.xml = project object model, in which we define the information about the project.
+
+<?xml version="1.0" encoding="utf-8"?>
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org</groupId>
+  <artifactId>project<artifactId>
+  <version>1.0.0</version>
+  <packaging>jar</packaging>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId></groupId>
+        <artifactId></artifactId>
+        <version></version>
+        <configuration>
+          <source>1.9</source>
+          <target>1.9</source>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+--------------------------------------------------------------------------------------------------------
+#2 dependency management
+The java is a language supports libraries to be reused in fast-paced development of the application. The developer dont have to write the code from scratch, rather can reuse the opensource jar libraries distributed by others.
+    
+How to manage these jar dependencies in a project,during compiling, packaging or executing the java project?
+In exiting build tool like Ant there is no support for managing the dependencies, developer has to download the jar dependencies place in a directory of the project and build the classpath pointing to those jars in building the application
+
+There are several problems are there in manually managing the dependencies.
+The developer working in the project has to download the dependency directy by going to vendor website where we have quite a number of problems
+1. There is no guarantee the developer is downloading the genuine copy of the jar dependency from the third-party website, the authenticity of the dependency cannot be verified.
+2. Since we have many developers in our team, if each of them has been given free hand in downloading the dependencies, there is a chance where everyone downloads the different version of the dependency and eventually leads to version conflict.
+3. if every developer is allowed to download and use the dependencies of their choice, there is no control over usage of the dependencies and their versions, due to which we landup in production deployment failures due to in-compatable dependencies.  
+  
+eg..
+tomcat (production tomcat server)
+|-lib (parent classloader)
+  |-Spring 4.x
+|-webapps
+  |-war1                          war2 (compiled) (pakcaged)
+    |-WEB-INF                     |-WEB-INF                  
+      |-lib (child classloader)     |-lib
+        |-Spring 4.x                  |-Spring 5.x
+      
+4. There is a high chance where developer unknowing might download and start using the licensed version of a dependency and land into licensing/legal issues of using them.
+5. Since all the developers has to download the depencies from the internet, there is a huge amount of time would be wasted in managing them
+6. Internet bandwidth will be consumed heavily in download the same copies of the dependencies across the developers machines.
+7. A downtime of the third-party vendor brokes the project development and build, release activities
+8. If the developer is working on multiple versions of the same project, for a parallel release or might be working on multiple projects of similar type, then he endup in keeping multiple copies of the same jars for each project, which heavily consumes the disk space of the developers machines.
+9. When we deliver our project for testing or deployment how does the qa or operational engineers knows the details of which jar dependency required in building, deploying and executing the project. its a big pain point in distributing the project
+
+To overcome the above problems, people has relied on distributing the libraries as part of version control repositories.
+We have Source code management repositories like git, svn etc  used for managing and distributing the source code of our application. Now along with source code of the project, we can even push/commit the libraries are jars of the project into version control system, so that all the above problems can be resolved.
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

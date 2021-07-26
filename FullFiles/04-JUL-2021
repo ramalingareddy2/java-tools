@@ -1,0 +1,570 @@
+ANT stands another neat tool, it is an java build tool written completely in java for building applications. ANT works on various different platforms, and the build script we wrote is platform portable.
+  
+ANT has provided
+1. a language for defining the build instructions
+2. library tasks that carries an build activity of a build process
+3. utitlities for lauching or kicking off the build process
+
+How to install the ANT?
+1. download ANT binary distribution:- 
+https://mirrors.estointernet.in/apache//ant/binaries/apache-ant-1.10.10-bin.zip  
+2. extract into a directory
+3. copy into c:\ drive
+4. configure the ANT_HOME and System Path pointing as below
+ANT_HOME=c:\apache-ant-1.10.10
+PATH=%PATH%;%ANT_HOME%\bin
+--------------------------------------------------------------------------------------------------------
+In order to build an application using ANT we need to write build script file, the default name with which we write the buildscript file is build.xml and should placed under the root level of the project.
+  
+basicjava
+|-src
+|-bin
+|-build.xml
+
+For each and every task we want to perform as part of the build process ANT has provided Task class, and associated with a relevant xml tag to refer it in build.xml
+Now in build.xml we write the build activities by using pre-defined tags for each task. The tasks are grouped under <target>.
+  
+Every <target> has a name with which it is identified, and we can express dependencies between the targets using their name.
+  
+all the targets are part of project.
+  
+build.xml
+<project name="basicant">
+  <target name="print">
+    <echo>ant build</echo>
+  </target>
+</project>
+
+goto the project directory and type ant targetName, if we want to execute a default target when we launch the ANT build we can specify it using default="" attribute at project level shown below.
+  
+<project name="basicant" default="print">
+</project>
+---------------------------------------------------------------------------------------------------------
+#2 How to build an java application and execute using ANT?
+BasicJava
+|-src
+  |-com
+    |-bj
+      |-test
+        |-BasicJavaTest.java
+|-build        
+  |-classes
+    |-*.class
+  |-dist
+    |-*.jar
+    |-*.war
+|-build.xml
+        
+class BasicJavaTest {
+  public static void main(String[] args) {
+    System.out.println("Hurray! compiled and executed through ANT!");
+  }
+}        
+
+build.xml
+----------
+<?xml version="1.0" encoding="utf-8"?>
+<project name="basicjava" basedir="." default="execute">
+  <target name="clean">
+    <delete dir="build/classes"/>
+    <delete dir="build"/>
+  </target>
+  <target name="createdirs" depends-on="clean">
+    <mkdir name="build"/>
+    <mkdir name="build/classes"/>
+  </target>
+  <target name="compile" depends-on="createdirs">
+    <javac srcdir="src" destdir="build/classes"/>
+  </target>
+  <target name="execute" depends-on="compile">
+    <java classname="com.basicjava.test.BasicJavaTest" classpath="build/classes"/>
+  </target>
+</project>
+---------------------------------------------------------------------------------------------------------
+
+Working with variables in ANT
+------------------------------
+Variables are the placeholders in which we can store values, instead of hardcoding the values of a location or filename or a classname in build script, we can place them in a variable and use it.
+  
+ANT supports multiple types of variables
+1. predefined or in-built ANT variables
+2. SystemProperties of java
+3. environment variables
+4. user-defined variables
+
+#1 ANT pre-defined variables
+1. What are ANT build-in variables?
+These are the variables defined by the ANT and made it available during the build execution to be used as part of the build script. These variables carries ANT/Project information underwhich the build is being performed.
+
+There are lot of in-build variables are in ant. every ant variable starts with ant.*
+1. ant.project.name
+2. ant.java.version
+3. ant.version
+4. basedir
+5. ant.project.default-target
+6. ant.core.lib
+7. ant.home
+8. ant.library.dir
+
+How to use these variables in ant build script?
+${variableName}
+
+build.xml
+<project name="antvariables" default="print">
+  <target name="print">
+    <echo>${ant.version}</echo>
+    <echo>ant.version</echo>
+  </target>
+</project>
+---------------------------------------------------------------------------------------------------------
+#2 Environment variables
+These are the Operating System variables defined at the System/User level and can be used across all the programs running on the operating system.
+PATH is one of such variable points to the program locations on your machine, so that operating system can identify and execute. Similarly programmers can create various different variables with values being defined, so that we can access them in the program.
+
+In ANT build script we can access these env variables using below technic. using the property task we are going to define an prefix for reffering enviroment variables like env defined below.
+Now while referring the variables we use env.variableName
+
+So ant can easily distinghuish which variable we are trying to access.  
+  
+build.xml
+<?xml version="1.0" encoding="utf-8"?>
+<project name="envvars" basedir="." default="envprint">
+  <property environment="env"/>
+  <echo>${env.JAVA_HOME}</echo>
+</project>
+---------------------------------------------------------------------------------------------------------
+#3 Java System Properties
+JVM level variables that are accessible across all the applications that are running on JVM. The jvm will gather all the information related to environment on which the programs are running and populates them as java system properties so that we can use them in java application.
+  
+ANT is a java program that is running on top of JVM, so obviously we should be able to access all the jvm system properties as variables directly within ANT build.
+---------------------------------------------------------------------------------------------------------
+#4 user-defined variables
+Apart from built-in, env or java system variables programmers can define their own variables and use them using <property> task.
+  
+<?xml version="1.0" encoding="utf-8"?>
+<project name="userdefinedvars" default="print" basedir=".">
+  <property name="tomcat.server.version" value="10"/>
+  <property name="src.dir" value="src"/>
+  <target name="print">
+    <echo>${tomcat.server.version}</echo>
+  </target>
+</project>
+-------------------------------------------------------------------------------------------------------
+Using Properties:-
+
+We can define variables in ant build using <property> task. by using variables we can write flexible build scripts which works across variables environments like qa, uat, prod etc by switching the values.
+  
+Now we define these variables in the build file, instead we can externalize these variables in properties files. we can write different properties files for different environments and hook to the build during execution.
+  
+build.properties
+author.name=Sriman
+build.version=1.0
+min.jdk.version=14  
+
+build-qa.properties
+author.name=Sriman
+build.version=3.1
+min.jdk.version=12
+
+
+build.xml
+<project name="propvars" basedir="." default="print">
+  <property file="build-qa.properties"/>
+  <!-- all the key and values we defined in build.properties are imported as variables and available -->
+  <echo>${min.jdk.version}</echo>
+</project>
+---------------------------------------------------------------------------------------------------------
+#usecase
+How to package and run a java program from a jar file using ant build script?
+lookuppincode  
+|-src
+  |-com
+    |-lookuppincode
+      |-helper
+        |-PincodeLocator.java
+  |-pincodes.properties
+|-build
+  |-classes
+    |-com/lookuppincode/helper/PincodeLocator.class
+    |-pincodes.properties
+  |-dist
+    |-lookuppincode.jar
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="basicmvc" basedir="." default="init">
+	<property file="build.properties" />
+
+	<path id="libclasspath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<condition property="jdk9">
+		<equals arg1="${java.required.version}" arg2="${ant.java.version}" />
+	</condition>
+	<target name="init" depends="checkJdkVersion,clean,createdirs,compile,war" />
+	<target name="checkJdkVersion" unless="jdk9">
+		<fail message="jdk 1.9 is required" />
+	</target>
+	<target name="clean">
+		<delete dir="${classes.dir}" />
+		<delete dir="${dist.dir}" />
+		<delete dir="${build.dir}" />
+	</target>
+	<target name="createdirs">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${classes.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+	<target name="compile">
+		<javac srcdir="${src.dir}" destdir="${classes.dir}" />
+	</target>
+	<target name="war">
+		<war destfile="${dist.dir}${file.separator}${ant.project.name}.war" webxml="${webinf.dir}${file.separator}web.xml">
+			<fileset dir="${webapp.dir}">
+				<include name="**/*.jsp" />
+				<include name="**/*.html" />
+				<include name="**/*.css" />
+				<include name="**/*.js" />
+				<include name="**/*.xml" />
+			</fileset>
+			<lib dir="${lib.dir}">
+				<include name="**/*.jar" />
+			</lib>
+			<classes dir="${classes.dir}">
+				<include name="**/*.class" />
+			</classes>
+		</war>
+	</target>
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+

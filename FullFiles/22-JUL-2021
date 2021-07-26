@@ -1,0 +1,69 @@
+Features of Maven build tool:
+1. standardized directory structure
+2. dependency management
+3. plugins
+4. build abstraction
+5. tools support
+6. archtypes
+
+#2 dependency management:
+The jar files required for compiling and running an java application are called dependencies. Unless we have these dependencies available for our project we cannot compile/execute the java program. So developers has to manually download the dependencies place in a directory of the project, build classpath pointing to these dependencies while compiling and executing the project.
+  
+There are several problems are there in managing the dependencies:
+1. no guarantee genuine copy of the dependencies is being downloaded by the developers and no way to certify its authenticity
+2. every developer can download the dependencies and use them, we will land into verion conflicts as different might download different versions of the dependency
+3. no usage control as individuals can download and use the dependencies directly, which leads to deployment failures in production env
+4. with no knowledge developers might download and use a dependency and might land into licensing and legal issues
+5. the bandwidth consumption would be high as all developers are going to download the dependencies, and results in poor network performance
+6. manually downloading the dependency will result into wastage of lot of time
+7. we might endup in keeping multiple copies of the dependencies on our machine which waste storage space
+8. When we distribute the code for testing and production deployment, the qa or operational engineers dont know which dependencies and their verions should be used for deploying/executing the project
+9. downtime of the vendor will impacts the build process of the project.
+  
+How to overcome the above problems?
+We can place jar files along with the source code of the project and push them into source code management repositories (git, svn), so that those gets easily distributed to everyone while checkout/pulling the source code. Looks like all the problems we discussed above are resolved but this approach has its own problems
+
+problems:-
+  1. scm repositories keeps versions/revisions of the source code, which is unnecessary for jar dependencies.
+  2. the scm repositories will endup in running into storage space issues due to multiple copies of the same jars being kept across the versions of the project
+  3. everytime while the developer pulls the code from repositories, it takes more time because along with source code, the jars depenencies are also placed, which impacts the developers productivity.    
+From the above we can clearly understand it is not recommended to place jars into scm repository.
+    
+To solve the above problems in managing and distributing the dependencies across the team maven has introduced dependency management through maven central repository.
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+

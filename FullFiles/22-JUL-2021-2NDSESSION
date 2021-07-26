@@ -1,0 +1,135 @@
+How many types of repositories are there in maven?
+1. Maven Central Repository = public repository
+
+2. Remote Repository        
+    1. enforce security restrictions
+    2. usage policies
+    3. network bandwidth consumption
+    4. distribute local produced artifacts within the organization
+    5. commercial artifacts or dependencies can be published and distributed internally between the teams
+    
+3. Local Maven Repository   = sharing artifacts across the projects on the same machine (diskspace usage)
+---------------------------------------------------------------------------------------------------------
+Transitive dependencies
+When working on project, we need certain dependencies to be available to develop/build the project, these dependencies we use inturn requires someother external dependencies, which are called transitive dependencies.
+  
+While working on a project developer has to spend lot of time on building the dependency graph in identifying which are all the dependencies we need and what is their inturn transitive dependencies to use, this goes in trail/error technic until we compiled a complete list of dependencies, there after project development will start.
+  
+To resuce us from above problem maven has introduced the concept of transitive dependency.
+Now while a third-party vendor publishing an artifact into maven central repository, he attaches a pom file describing what other dependencies are required to use this aritfact as part of it. So when we run the maven build for our project maven reads the project pom and artifact dependencies from their pom and total builds an dependency graph.
+now downloads these dependencies into local repository and buils the project.
+  
+How does maven handles conflicting transtive dependencies?
+maven uses dependency mediation technic to resolve version conflicts in transtivie dependency.
+
+if we want to exclude any of the transitive dependencies first we need to find through which dependency the transitive dependency was included. We can find this by running the below command.
+mvn dependency:tree
+once we identified the transitive dependency which we want to exclude declare in the pom.xml for that dependency exclusions.
+
+<dependency>
+  <groupId>g1</groupId>
+  <artifactId>a1</artifactId>                
+  <version>1.0</version>
+  <exclusions>
+    <exclusion>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aop</artifactId>                
+    </exclusion>
+  </exclusions>
+</dependency>
+-------------------------------------------------------------------------------------------------------
+dependency management
+1. dependency identification technic
+2. repositories (3 types of repositories)
+3. declarative dependency management (in pom.xml)
+4. transitive dependenies
+5. dependency mediation technic
+6. exluding transitive dependencies of a dependency
+7. dependency scope
+
+--------------------------------------------------------------------------------------------------------
+dependency scope
+when we delcare dependencies in the pom.xml, maven takes care of downloading those dependencies and builds the project by adding the dependencies to the classpath automatically.
+Here not all the dependencies are required at all stages of the build process like
+  -compilation
+  -packaging
+  -unit testing
+  -runtime execution
+For example we need mysql-connector-java.jar file only at runtime during the stage of compile we dont need to add this jar to the classpath of the project.
+Similarly servlet-api.jar/jsp-api.jar is required during compilation of the code, but we should not package it into war.
+
+Since maven is taking care of adding these dependencies into classpath or packaging into the applications we need to tell which dependency should be used at which stage of the build process to help use the dependency appropriately through dependency scope.
+
+There are 5 scopes 
+1. compile (default) = available at all the stages of the build process (spring-core)
+2. provided = the dependency is included during compilation and test phase, but will not be shipped/packaged (provided by the runtime) (servlet-api)
+3. runtime = not required during compilation, but include during runtime/packging (mysql)
+4. test = only required while running/compiling unit testcases (junit.jar)
+5. import = include another pom dependencies into your project
+6. system (deprecated) = local jar file
+
+How to use local jar file as a dependency in a maven project?
+maven always during the build process will try to resolve the dependency only through repository. we cannot directly include a local filesystem jar into maven build by declaring in pom.xml
+if you have dependency locally available but not part of maven central repository, we need to install the dependency into local maven repository to build it using maven install:install-file plugin.
+
+mvn install:install-file -DgroupId=g1 -DartifactId=a1 -Dversion=v1 -Dfile=loc -Dpackaging=jar/war/ear -DgeneratePom=true
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

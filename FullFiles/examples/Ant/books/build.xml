@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="books" basedir="." default="copy">
+	<property file="build.properties" />
+	<target name="copy">
+		<copy todir="printing">
+			<fileset dir=".">
+				<include name="*.txt" />
+			</fileset>
+			<filterset begintoken="#{" endtoken="}">
+				<filter token="publisheddate" value="${publisheddate}" />
+				<filter token="publisher" value="${pusbliher}" />
+				<filter token="place" value="${place}" />
+			</filterset>
+		</copy>
+	</target>
+</project>
