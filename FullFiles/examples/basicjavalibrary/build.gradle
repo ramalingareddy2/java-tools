@@ -1,0 +1,28 @@
+plugins {
+	id 'java-library'
+}
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(9))
+	}
+	/*sourceCompatibility=JavaVersion.VERSION_1_9
+	targetCompatibility=JavaVersion.VERSION_1_9*/
+}
+version="1.0.0"
+/*
+tasks.register("execJar", Jar) {
+	dependsOn 'compileJava'
+	manifest {
+		attributes("Main-Class":"com.bjl.test.BJLTest");
+	}
+	from('build/classes/java/main')
+	include('/*.class')
+}
+*/
+
+jar.configure {
+	manifest {
+		attributes("Main-Class":"com.bjl.test.BJLTest");
+	}
+
+}

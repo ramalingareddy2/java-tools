@@ -1,0 +1,22 @@
+tasks.register("clean") {
+	doLast {
+		println "cleaning directories"
+	}	
+}
+
+tasks.register("compile") {
+	dependsOn 'clean'
+	doLast {
+		println "compiling code"
+	}
+}
+
+def runJavaTask = tasks.register("run") {
+	doLast {
+		println "execute java code"
+	}
+}
+
+runJavaTask.configure {
+	dependsOn 'compile'
+}

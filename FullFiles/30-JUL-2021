@@ -1,0 +1,74 @@
+Gradle is open source build automation tool, it can be used for building application developed on jvm based languages like Java, Groovy, Scala and Andriod Platform.
+  
+In Gradle we express the build script or build definition in Groovy or Kotlin language in which we declare project information, tasks and plugins.  
+
+How does Gradle Works!?
+------------------------
+#1 Gradle works based on Tasks and Plugins
+
+In Maven it always assume a project is of java type (packaging: jar) and applies standardized build lifecycle and performs the build activities based on standard conventions. But Gradle doesnt make any assumptions as above and will permits you to build any software of any type. It doesnt mean in Gradle we need to write build script in building an application, but Gradle has provided plugins that handles most of the common projects by providing conventions and tasks.
+  
+ANT has provided pre-defined tasks through which we can perform build activities, developer has to write build script in building project using Tasks.
+  
+MAVEN has provided standard conventions and plugins, the plugins are building blocks which performs an build activity as part of MAVEN standardized build lifecycle
+
+GRADLE by default it doesnt makes any assumptions about the project, so it can build anytype of project. Tasks are the basic building blocks in GRADLE to perform build activities, but programmer dont need to write code/buildscript for building an project, instead GRADLE provided plugins through which it enforces conventions and applies Task to perform build for a specific project.
+  
+#2 Directed Acyclic Graph (DAG) model.
+The core model is based on Tasks in Gradle. programmer has to write/configure tasks as part of the gradle build by declaring their dependencies between the tasks.
+Task in Gradle contains:
+  - Action: operation or piece of work to do
+  - Inputs: values, files and directories on which it has to perform operation
+  - Outputs: files and directories that the actions has modified or generated
+  
+Now Gradle in order to build the project, it reads the task configuration and derives the dependencies and draws an Directed Acyclic Graph (DAG) to understand task execution order and performs the build process.
+---------------------------------------------------------------------------------------------------------
+Gradle Lifecycle
+
+Maven has pre-defined Lifecycles with fixed phases, what should be done to build a project will be determined based on Lifecycle.
+    
+When it comes to Gradle, a Lifecycle is completely different from Maven lifecycle, in Gradle always the tasks we configured only will gets executed, here Gradle Lifecycle means what process it applies in running the tasks we configured.
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

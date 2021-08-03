@@ -1,0 +1,14 @@
+defaultTasks 'remoteCopy'
+
+task "compress" {
+	doLast {
+		println "compressing files"
+	}
+}
+
+task "remoteCopy" {
+	dependsOn 'compress'
+	doLast {
+		println "copy files to remote location"
+	}
+}

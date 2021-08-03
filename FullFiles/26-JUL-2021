@@ -1,0 +1,156 @@
+Plugins are the basic building blocks in maven, each activity during the build process is performed by the plugins only. Those are java classes written with functionality to perform a build appropriate operation during the build.
+  
+There are lot of plugins provided by maven by default associated with maven build lifecycle and are executed during the build process for eg..
+  - Clean Plugin
+  - Compiler Plugin
+  - Resources Plugin
+  - Package plugins 
+  - Install Plugin
+  - Surefire Plugin
+  - Deploy Plugin
+In addition there are plenty of third-party vendor provided plugins are available to perform different operations during the build lifecycle.
+Each plugin can have multiple goals, a goal is an unique/named operation that is performed by a plugin.
+
+How to execute a plugin?
+#1 we can run the plugin manually without associating with build lifecycle
+mvn plugin:goal
+  
+#2 plugins can be associated with build lifecycle so that those are executing automatically during the build lifecycle at relevant phase.
+  There are 2 ways a plugin can be associated to the build lifecycle
+    1. within the pom.xml we can include plugin and define executions
+    2. within the plugin artifact, we can specify at which phase it should be executed
+-------------------------------------------------------------------------------------------------------
+Build Lifecycle
+For each java project, the steps we carry in conduting the build process would be same, so instead of the programmer defining these activities to perform the build in a build script file repeatedly, maven has standardized these activities as phases and defined them as part of build lifeycle.
+  
+There are 3 lifecycles are defined by maven.
+  1. clean   = each time when we build a project, we may not want to clean the target directory to start with, so clean lifecycle has been separated from default lifeycle.
+  2. default = 8 phases that are commonly perform in carrying a build operations for a typical java project
+  3. site    = used for generating java doc for a project, and we usually do this while releasing the project so kept in separate lifecyle.
+    
+    
+A lifecycle containers predefined phases. Every phase is associated with plugin, goals to perform operation at that phase. 
+By default maven has standarized for each these phases the default plugins and goals to be executed, so that when we launch a maven build, automatically the plugin goals associated will be executed and perform the build operation.    
+  
+What are the plugins and goals associated to each phase of a lifecycle  
+#1 clean lifecycle
+  - clean phase
+    |-CleanPlugin:Clean
+
+#2 default lifecycle
+  - validate
+  - compile
+  - test
+  - package
+  - integration-test
+  - verify
+  - install
+  - deploy
+  
+#3 site lifecycle
+  - site phase
+    |-sitePlugin:site
+    
+To conduct an maven build we need to specify which lifecycle, till what phase the build has to be performed. Since all the phases across the lifecycle are unique we dont need to tell lifecycle name(it is optional)
+mvn lifecycle:phase lifecycle:phase lifecycle:phase
+here lifecycle is optional and to perform build we need to specify atleast one phase.
+  
+mvn clean verify
+
+Because of the standard build lifecycle and phases, the developer never need to know how to conduct a build for a maven java project, he dont need to read a build instruction or a build script file to understand how to perform the build of a project. Since the lifecycle and phases are standardized anyone can build any maven project by simply kicking of phases of the lifecycle which is nothing but build abstraction.
+--------------------------------------------------------------------------------------------------------
+Apart from maven, there are lot of third-parties providing the plugins for usage in maven build. instead if we want to enhance the build process of the maven and perform some custom operation during any of the phases in the lifecycle, we can write our own plugin and associate to the lifecycle phases.
+  
+maven has provided plugin api using which we need to write java classes and hookup into our pom file for execution. To include maven plugin api as part of project to develop plugins we need 2 dependencies
+1. maven-plugin-api
+2. maven-plugin-annotations
+and we need to specify packaging type of project as "maven-plugin"
+
+Instead of we manually creating the project and setting up the packaging and dependencies maven has provided an archetype called maven-archetype-mojo
+
+mojo = maven old java object (plugin)
+  
+mvn archetype:generate -DgroupId=leawy.com -DartifactId=debugPlugin -Dversion=1.0.0 -DarchetypeArtifactId=maven-archetype-mojo
+
+debugPlugin
+|-src
+  |-main
+    |-java
+    |-resources
+|-pom.xml
+  [packaging: maven-plugin]
+  [dependencies: maven-plugin-api, maven-plugin-annotations ]
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

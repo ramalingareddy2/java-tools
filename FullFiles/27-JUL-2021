@@ -1,0 +1,62 @@
+Build lifecycle
+For every java project the activities we need to perform in building an application would be same across, so maven has standardized these build activities as phases into build lifecycle, so that programmer dont need to write build script for building a project.
+  
+Three build lifecycles are there, within which phases are pre-defined and associated with plugin goals to perform build activity at that phase.
+1. default = will carry the compilation, packaging and deployment of an application
+  1.1 validate
+  1.2 compile
+  1.3 test
+  1.4 package
+  1.5 integration-test
+  1.6 verify
+  1.7 install
+  1.8 deploy
+  
+2. clean
+  1.1 clean
+  
+3. site
+  1.1 site
+--------------------------------------------------------------------------------------------------------
+How to develop our own custom plugin?
+Maven has provided plugin api, using which we need to write our own plugins. We need to package the project as maven-plugin project and install into local maven repository.
+  
+Either we can run it directly using mvn plugin:goal or associate it as part of the maven build lifecycle phase by configuring it in pom.xml of another project.
+  
+To help us in quickly creating a plugin, maven has provided an archetype maven-archetype-mojo, this creates an maven project with
+packaging: maven-plugin
+dependencies: maven-plug-api, we need to additional include maven-plugin-annotations
+
+Since the plugin class will be invoked the maven build system, we cannot write any class and cannot be called as plugin class to be invoked by maven, we need to write our class extending from maven provided abstract class "AbstractMojo" and override execute() method.
+  
+abstract class AbstractMojo {
+  public void execute() {}
+}  
+              
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

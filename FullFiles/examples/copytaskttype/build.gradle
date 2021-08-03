@@ -1,0 +1,5 @@
+defaultTasks 'copyJar'
+tasks.register("copyJar", Copy) {
+	from(file('d:/quickgraph.jar'))
+	into 'e:/projects'
+}

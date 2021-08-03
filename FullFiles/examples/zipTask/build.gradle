@@ -1,0 +1,8 @@
+defaultTasks 'zipImages'
+tasks.register("zipImages", Zip) {
+	archiveFileName='images.zip'
+	destinationDirectory=file('d:/transcripts')
+	from 'd:/images'
+	//into(file('d:/images.zip'))
+	include('**/*.jpg')
+}

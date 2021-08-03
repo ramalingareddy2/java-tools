@@ -1,0 +1,17 @@
+defaultTasks 'package'
+def compileTask = tasks.register("compile") {
+	doLast {
+		println "compiling source code"
+	}
+}
+
+tasks.register("package") {
+	dependsOn 'compile'
+	doLast {
+		println "packaging the application"
+	}
+}
+
+compileTask.configure {
+	enabled=false
+}

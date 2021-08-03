@@ -1,0 +1,412 @@
+How does Gradle works?
+1. The basic build-block in Gradle build execution is Task, but the programmer dont need to write the build scripting defining the build execution, instead gradle has provided pre-defined plugins. Plugins contains conventions and tasks packaged together that can be applied for a project to build.
+  
+2. The core model of Gradle is based on Tasks, this means the build bunch of tasks, configured with their dependencies. Gradle reads the task definition identifies the dependencies and draws an DAG graph inorder to perform the build process.
+Tasks containers:
+1. action
+2. input
+3. output
+--------------------------------------------------------------------------------------------------------
+Gradle Build execution Lifecycle
+
+In Maven all the activities to be applied in performing build for a project has been standardized and defined as part of lifecycle phases, but when it comes to Gradle, it doesnt assumes the software to be build as anytype, so we dont have any standard lifecycle phase, whichever the tasks configured for the build will be executed by Gradle.
+  
+The Gradle lifecycle here refers to the phases in which the tasks are identified and executed. Gradle evaluates and executed a build script in 3 phases.
+  
+1. Initialization = Reads the gradle build script and determines the environment and identifies the project take part in build.  
+2. Configuration = Constructs and configures the task graph for the build and then determines which taks has to be executed in which order.  
+3. Execute = Runs the tasks selected at the end of the configuration phase.
+  
+---------------------------------------------------------------------------------------------------------
+Features of Gradle
+1. High Performance
+  1.1 Gradle performs the build in an incremental manner, where for eg.. if we apply the java-library plugin, gradle will executes all the tasks derived from that plugin. if we rerun the gradle build, gradle compares the timestamp of the source files to determine which has been changed and only compiles the source code that has impact leaving the other files same, so thus saves lot of time in perform build process.
+  1.2 The dependencies we configured in gradle build will be downloaded parallely, from repositories which greatly improves the performance or reduces build execution time
+  1.3 We can enable gradle build cache, which will reuses the task output in the subsequent runs, if the output of the task execution is not going to change.
+    
+2 JVM Foundation
+Gradle runs on JVM we should have jdk installed to use Gradle. as it runs on JVM platform we get an platform portability as an advantage.
+    
+3. Conventions
+In Maven, it eliminated the build script by imposing conventions and standized build lifecycle phases. The Gradle also takes the concept of conventions from maven so that for most of java projects can be build with default conventions.
+We need to choose an appropriate plugin and apply in gradle build, so that the conventions and tasks will be imported and executed as part of the build, so dont need to write any build script or results in minimal build script.
+  
+4. Extensibility
+We can write our own tasks and can create our own plugins to enhance the build
+
+5. Debugging
+Build Scan provides extensive information about the build run, so that we can easily determine the build failures. 
+--------------------------------------------------------------------------------------------------------
+Build script basics
+
+Everything in Gradle works on top of 2 concepts:
+1.project
+2.task
+
+project can represent anything depends on what it is doing in Gradle, for example a project might represent a java library or a web application or could be a zip produced by compressing multiple files and distributed. In gradle project defines based on what things are being done, rather what is being built.
+Each project madeup of tasks, A task represents an atomic piece of work which a build performs.  
+--------------------------------------------------------------------------------------------------------
+How to install gradle?
+1. download the gradle-7.1.1 binary distribution from 
+https://gradle.org/next-steps/?version=7.1.1&format=bin
+2. copy the zip file into c:\ drive and extract it
+3. set the system PATH pointing to the c:\gradle-7.1.1\bin directory
+
+--------------------------------------------------------------------------------------------------------
+Building First project in Gradle
+
+Since Gradle doesnt defines a project of type, we can create a folder/directory in which we can write an build script for executing one/more tasks. by default gradle to build a project it looks for a file under the current working directory with a name build.gradle.
+
+projectdirectory
+|-build.gradle
+This build gradle is called as "gradle build script", in which we define project and tasks. The buildscript can be written either in Groovy / Kotlin language.
+we are going to use Groovy in our examples.  
+  
+message
+|-build.gradle
+by default when we write build.gradle we defined an project implicitly which has a name (static) and same as the directory name in which we wrote the build.gradle file.
+  
+task "taskName" {
+  doLast {
+    println "hurray! gradle build works!"
+  }
+}
+
+In command-line goto the project directory and type gradle taskName
+Groovy:
+1. no need to write your line terminated by ";"
+2. no imports are required
+3. we can call a function without parethesis if we have only argument
+4. No primitive data types, for all primitives groovy defined wrapper classes.
+5. operators are overloaded to perform arthematic, logical and relational operations on wrapper classes.
+  
+  
+Every task has 2 action blocks
+1. doFirst
+2. doLast
+we can write code inside the task either in doFirst {} clouser or doLast{} clouser. A clouser is nothing but a block code wrapped in an anonymous object, since it is block of code we can assign to variable or we can parameter to the function etc.
+  
+The name itself will tell, doFirst will perform execution, at the end of execution of the task the doLast will be executed.
+  
+shortened form of writing doFirst and doLast in a Task is:
+task "taskName" {
+  <<{
+    
+  }
+  >>{
+    
+  }
+}
+-------------------------------------------------------------------------------------------------------
+In gradle 7.1.1 the task definition has been changed
+
+A project object in Gradle contains task collection, we can define and register a task into the task collection using a method called "register".
+  
+#1 register task and define it
+tasks.register("taskName") {
+  doFirst {}
+  doLast {}
+}
+for eg..
+tasks.register("printTask") {
+  doFirst {
+    println("printing task")
+  }
+}
+
+
+#2 register task and define the body latter using named
+tasks.register("copyTask") // we registered the task into tasks collection
+
+tasks.named("copyTask") { // we are adding task definition into existing tasks with name copyTask
+  doFirst {
+    println "copyTask"
+  }
+}
+  
+
+#3 A task can be registered and configured later, so while executing a task Gradle reads the task definition applies the configuration and executes.
+
+def copyTask = tasks.register("copy") {
+                ext.source=""
+                doFirst {
+                  println "copying ${source} into destination directory"
+                }
+              }
+
+copyTask.configure {
+  source="abc.txt"
+}  
+-------------------------------------------------------------------------------------------------------
+Variable in Gradle
+
+we can declare variables in Gradle at 2 levels
+1. project level = global variables can be used across the project
+2. task level = extra properties defined and is accessible only within the scope of the task
+
+build.gradle
+def javaVersion=1.9
+def author="Sriman"  
+  
+tasks.register("info") {
+  ext {
+    information="info task project"
+  }
+  doFirst {
+    println "java version: ${javaVersion}"
+    println "author : ${author}"
+    println "information: ${information}"
+  }
+}  
+  
+we can define variables or properties in task block as well using ext clouser or ext.variableName. while accessing the task property we need to prefix taskName.variable name.
+-------------------------------------------------------------------------------------------------------
+Task dependencies
+------------------
+In Gradle a project contains bunch of Tasks, each of these tasks has inter dependency with other tasks. we can declare tasks and dependencies in 2 ways
+
+#1 while declaring the task itself define on which task it is dependent on
+tasks.register("clean") {
+  doLast {
+    println "cleaning directories"
+  }
+}
+tasks.register("compile") {
+  dependsOn 'clean'
+  doLast {
+    println("compile java code")
+  }
+}
+Run:-  
+gradle compile
+
+#2 define tasks and configure dependencies later
+
+tasks.register("clean") {
+  doLast {
+    println "cleaning directories"
+  }
+}
+def compileTask = tasks.register("compile") {  
+  doLast {
+    println("compile java code")
+  }
+}
+
+compileTask.configure {
+  dependsOn 'clean'
+}
+--------------------------------------------------------------------------------------------------------
+How to declare a tasks as defaultTasks in gradle build
+
+defaultTasks 'zip'
+task "zip" {
+  doLast {
+    println "zipping files"
+  }
+}
+
+task "remoteCopy" {
+  doLast {
+    println "remote copy files"
+  }
+}
+------------------------------------------------------------------------------------------------------
+Enabling and Disabling Tasks
+
+defaultTasks 'package'
+def packageTask = tasks.register("package") {
+  doLast {
+    println "packaging project"
+  }
+}
+
+packageTask.configure {
+  enable=false
+}
+-------------------------------------------------------------------------------------------------------
+Conditional Task execution.
+  
+defaultTasks 'compile'  
+def compileTask = tasks.register("compile") {
+  doLast {
+    println "compiling"
+  }
+}  
+compileTask.configure {
+  onlyIf {
+    project.hasProperty("javaVersion") && project.javaVersion == 9
+  }
+}
+gradle -PjavaVersion=9 // pass property while running the gradle build
+  
+--------------------------------------------------------------------------------------------------------
+Gradle Task Types
+
+Till now we defined our own custom tasks in performing build activities, but there are lot of common activities we perform in order to build a project like
+  - copying files
+  - compiling classes
+  - building jar etc
+  
+To carry these common activities if we have to write our tasks, it becomes tedious job and we endup in writing lot of for build script.
+  
+Instead gradle has provided Task Types, a Task type is a subclass of DefaultTask object gradle has provided, so that we can create our own task extending from Gradle task types and configure to perform operation.
+  
+tasks.register("taskName", taskType) {
+  properties
+  methods
+}
+
+#wap a gradle build script to copy d:\gradle.txt into e:\
+copyfile
+|-build.gradle
+
+defaultTasks 'copyFile'
+tasks.register("copyFile", "Copy") {
+  caseSensitive true
+  from(file('d:/gradle.txt'))
+  into 'e:/'
+}
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

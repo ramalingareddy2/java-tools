@@ -1,0 +1,74 @@
+Gradle
+
+Ant:-
+dis-advantages:-
+  - There are no standard conventions
+  - no dependency management
+  - repeated build scripts across the projects which is annoying
+advantages:-
+  - flexibility
+  
+Maven:-
+  advantages:-
+    - standardized convention
+    - dependency management
+    - declarative build management tool, rather than build scripting
+    - build abstraction
+  dis-advantages:-
+    - No flexibility, to rigid to perform any custom operations, for anything we need to write our own plugins
+
+From the above 2 build tools we can understand 
+  ANT - tedious to work, because nothing is standardized
+  MAVEN - builds cannot be customized, extensions are difficult to achieve
+  
+To overcome the above probelms with existing build tools Gradle was introduced by gradle.org
+
+What is Gradle?
+Gradle is an opensource build automation tool, used for building jvm based languages like Java, Groovy, Scala and Android platform. 
+  
+principle or basics on which gradle works:
+1. Gradle allows you to build any type of software because, it makes few assumptions unlike maven (maven has defined standard build lifecycle with phases in support of java projects and only works for it), but gradle does defined any standard lifecycle phases.
+Looks like we are going back to ANT, where we need to endup in writing too much amount of build script in building a project. 
+But Gradle has provided plugins that handles most of the common projects by providing conventions and tasks.
+
+In gradle doesnt uses XML as a build script/definition file, because of too verbose and complex to read, instead gradle build script should be written in any of these 2 languages:
+  1. groovy
+  2. kotlin
+both groovy and kotlin are jvm based languages, where most of their syntaxes matches with java language syntax
+
+
+
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    

@@ -1,0 +1,14 @@
+defaultTasks "printProjectApi"
+
+description="projectobject demonstrates the usage of Project Api in Gradle"
+tasks.register("printProjectApi") {
+	doLast {
+		println "project description : ${project.description}"
+		println "project name: ${project.name}"
+		println "path : ${project.path}"
+		println "project directory: ${project.projectDir}"
+		println "build directory: ${project.buildDir}"
+		
+		println "tasks: ${project.tasks.size()}"
+	}
+}

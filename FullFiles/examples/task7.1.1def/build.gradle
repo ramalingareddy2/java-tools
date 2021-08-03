@@ -1,0 +1,24 @@
+
+tasks.register("printTask") {
+	doFirst {
+		println "print task"
+	}
+}
+
+tasks.register("compileTask")
+
+tasks.named("compileTask") {
+	doFirst {
+		println "hurray! attached body for compileTask"
+	}
+}
+
+def copyTask = tasks.register("copyFiles") {
+	ext.source=""
+	doFirst {
+		println "copy ${source} file in copyFiles task"
+	}
+}
+copyTask.configure {
+	source="d:/abc.txt"
+}

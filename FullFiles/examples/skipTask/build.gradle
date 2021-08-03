@@ -1,0 +1,12 @@
+defaultTasks 'broadcast'
+def broadCastTask = tasks.register("broadcast") {
+	doLast {
+		println "broadcasting to the public"
+	}
+}
+
+broadCastTask.configure {
+	onlyIf {
+		project.hasProperty("env") && project.env=="prod"
+	}
+}

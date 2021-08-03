@@ -1,0 +1,18 @@
+def javaVersion=1.9
+def author="Sriman"
+
+tasks.register("info") {
+	ext {
+		information="info task"
+	}
+	doLast {
+		println "java version: ${javaVersion}"
+		println "author: ${author}"
+		println "description : ${information}"
+	}
+}
+tasks.register("printInformation") {
+	doLast {
+		println "information : ${info.information}"
+	}
+}

@@ -1,0 +1,17 @@
+task "clean" {
+	doFirst {
+		println "doFirst task block of clean task"
+	}
+	doLast {
+		println "doLast task block of clean task"
+	}
+}
+
+task "compile" {
+	doFirst {
+		println "doFirst block of compile task"
+	}
+	doLast {
+		println "doLast block of compile task"
+	}
+}
