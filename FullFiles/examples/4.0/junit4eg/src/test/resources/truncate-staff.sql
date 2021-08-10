@@ -1,0 +1,1 @@
+delete from staff where staff_no > 0;

@@ -1,0 +1,17 @@
+plugins {
+	id 'war'
+}
+repositories {
+	mavenCentral()
+}
+
+java {
+	toolchain {
+		languageVersion.set(JavaLanguageVersion.of(9))
+	}
+}
+
+dependencies {
+	compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+	compileOnly 'javax.servlet.jsp:javax.servlet.jsp-api:2.3.3'
+}

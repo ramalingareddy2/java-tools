@@ -1,0 +1,114 @@
+JUnit
+JUnit is an unit test automation tool, that help us in writing the unit testcases in verifying the production code written by the developer.
+  
+What is unit testing, why do we need to that?
+The developer while developing the code he has to perform the testing to verify whether the code being developed is working properly or not, once he has certified his code, he can delivery the code to qa for further testing. The tests that is performed by the developer during the time of development is called "Unit Testing", it ensures QA doesnt have any road-blockers or show stoppers in conducting the testing for the application.
+  
+Why do we need to automate the Unit testing process?
+Unit testing is a repeatitive job/activity that has to be conducted by the developer during the phase of development to delivery of the application. The developer has to perform unit testing during the development of each feature and their dependent features he is working on per each release, in addition he has to perform the unit testing whenever he has fixed a bug to certify his changes has not broken the code. From the above we can understand it is repeatitive activity that has to be conducted by the developer for each release and bug fix, and if conducted manually will takes lot of time and increases the cost of development and delays delivery of the application, so to avoid these problems we need to have unit test automation in place.
+  
+When do we need to perform unit testing?
+The developer has to write unit test cases in parallel to the development of the production code which is called "test-driven development" (TDD). This is also even called as "code a little, test a little" technic. once the code has reached to a state where it can be executed independently by taking inputs and result in output, immediately developer has to write the unit testcase to verify it is working properly or not.
+  
+What is unit testing how to conduct it?
+Testing is the process of verify the code whether it is working as per the requirement or not, always while performing the testing 
+1. we have to take the pre-defined/known set of inputs which are called "test fixtures".
+2. based on the functionality of the component/block of code we wanted to test, we need to manually evaluate the output of running the code with the known inputs
+3. then execute the component/block with those known inputs and capture the actual output
+4. compare the expected output which we computed manually with actual output resulted by the code executed, if both are matching the test we conducted is passed, otherwise we can mark it as failed.
+
+int add(int a, int b) { // what is this method is doing
+  return a+b;
+}  
+
+a=10
+b=20
+expectedSum=30
+// then execute the code and verify the output is matching with expected output or not
+actualSum = add(a, b)
+verify expectedSum is matching with actualSum
+
+From the above we can understand evaluate the code manually each time and running the code and verify the output is going to take lot of time, instead we need to do automation as discussed.
+  
+We cannot achieve 100% automation in testing a system and few applications are not qualified to be automated, for those testcases the developer has to perform manually testing only.
+  1. if we have a system which may not always returns the same output for the known given inputs, each time when we run the code with the same set of inputs also the system behaves differently and results in different outputs, then we cannot automate  
+  
+  For eg.. scientific application where the tests being conducted will give different set of results each time when we perform with same inputs because of environmental factors (like humidity, temperature etc), in such case we cannot implementation automation
+  
+How to automate the process of unit testing, what we should do to test it automatically?
+  
+class Calculator {
+  public int add(int a, int b) {
+    return a+b;
+  }
+}  
+
+class CalcuatorTest {
+  public static void main(String[] args) {
+    int a = 10;
+    int b = 20;
+    Calculator calculator = new Calculator();
+    int sum = calculator.add(a, b);
+    System.out.println("sum : " +sum);
+  }
+}
+In the above block of code we are printing the output of executing the original code, which is not called testing, because how can developer manually verify each output is correct or not it is going to be timetaking process, rather a test code
+1. should execute original code with know inputs
+2. and should verify the output and certify passed or failed, it should not print the original output.
+  
+
+class CalcuatorTest {
+  public static void main(String[] args) {
+    int a = 10;
+    int b = 20;
+    int expectedSum = 30;
+    Calculator calculator = new Calculator();
+    
+    int actualSum = calculator.add(a, b); // execute original code
+    // check the condition
+    if(expectedSum == actualSum) {
+      System.out.println("passed");
+    }else {
+      System.out.println("failed");
+    }    
+    
+    
+  }
+}  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

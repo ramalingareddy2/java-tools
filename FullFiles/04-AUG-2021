@@ -1,0 +1,53 @@
+JUnit
+
+Unittest automation framework, that allows to build automation testcases for the production source of an project.
+
+What is Unit Testing?
+The developer cannot directly release the code to the qa post completion of the development, for testing the application. The developer is responsible for conducting the unitesting to verify the code is working properly without any blockers or errors before delivering the code to qa, to certify his code is working properly, this process of conducting the testing on the code written by developer is called "Unit Testing".
+
+Unit Testing is a repeatitive job that should be conducted by the developer each time during the phase of development to delivery of the application for eg..
+  1. whenever developer has developed a new feature to certify it is working properly or not he has to perform unit testing before delivery to the qa
+  2. when the developer has fixed a bug, he has to conduct unit testing on the bug and related features before delivering to the qa
+  
+looks like unit testing is a repeatitive and time consuming job, which increases the cost of development and delivery of the application if carried manually
+
+So to avoid above problems in conducting the unit testing, we need to adopt unittest automation for a project. Using the Unit Test Frameworks, the developer has to build testcases in parallel to the development of the application.
+  
+Developer while developing the project, once he has reached to the code, where it produces some output of executing, immediately he has to write the testcase code to test it, this technic is called "Test Driven Development", 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  

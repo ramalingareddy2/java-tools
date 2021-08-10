@@ -1,0 +1,171 @@
+Project Api
+properties
+  - name
+  - description
+  - path
+  - buildDir
+  - projectDir
+  - version
+------------------------------
+What are plugins in Gradle?
+Plugins extends the project capabilities
+1. it adds new DSL Elements by extending the Gradle Model
+2. Configures project according to convention and add more tasks
+3. Apply project specific settings
+
+How to apply a plugin?
+----------------------
+plugins {
+  id 'pluginName'  
+}
+--------------------------------------------------------------------------------------------------------
+1. Standardized Directory Structure
+2. Build Lifecycle
+------------------------------------ plugin
+3. Dependency Management = Rich Support
+4. Tools Support = poor
+5. Archetypes = init plugin
+------------------------------------------------------------------------------------------------------
+How to build a java application project in Gradle?
+The different between java-library and application project is, in library we package the project as jar. In application project, the project is packaged as executable jar and we can execute the project by specifying mainClass.
+
+projectdir
+|-src
+  |-main
+    |-java
+    |-resources
+|-build.gradle
+
+build.gradle
+------------
+plugins {  
+  id 'application'
+}
+application.configure {
+  mainClass="fqnMainClass"
+}
+---------------------------------------------------------------------------------------------------------
+How to do dependency management in Gradle?
+
+Gradle resolves dependencies from one or more repositories. The following are the repository types it supports.
+1. Maven Repositories
+2. Ivy repositories
+3. flat directory
+
+In Gradle build we need declare the repositories to be used in resolving the dependencies declared. The popular repositories available for public and open source access are  
+1. maven central
+2. bintray jcenter
+3. Google Andriod repository
+
+1. to use maven central repository
+repositories {
+  mavenCentral()
+}
+2. to use bintary jcentral repository
+repositories {
+  jcenter()
+}
+3. remote repository of maven type
+repositories {
+  maven {
+    url 'remoteRepoUrl'
+  }
+}
+4. Flat directory repository
+repositories {
+  flatDir {
+    dirs 'lib'
+  }
+}
+--------------------------------------------------------------------------------------------------------
+Declaring dependencies
+We can declare the dependencies in gradle using dependencies clouser
+
+dependencies {
+  // list of dependencies to be used
+}
+
+while declaring the dependencies we need to specify the scope along with them.
+api (provided) = only required during compilation
+implementation (compile, runtime) = implementation required to compile the production source code and used at runtime
+testImplementation = use these dependencies while compiling and running test source of the project
+
+syntax:
+dependencies {
+  api group:'', name: '', version: '' // length form
+  api 'name:group:version'
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

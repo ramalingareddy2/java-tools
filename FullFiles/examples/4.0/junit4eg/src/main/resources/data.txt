@@ -1,0 +1,1 @@
+JUnit is an Unit Test Automation Framework, that helps in quickly writing test cases and execute them.

@@ -1,0 +1,47 @@
+plugins {
+  id 'java-library'
+}
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(9))
+  }
+}
+
+sourceSets {  
+  main {
+    java {
+      srcDirs = ['src/main/javasrc']
+    }
+    resources {
+      srcDirs = ['src/main/others']
+    }    
+  }
+}
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  

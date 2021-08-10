@@ -1,0 +1,125 @@
+Declaring source files via SourceSets in Gradle
+By default Gradle works based on Standardized directory structure based on the java plugins we import, how about if we want to introduces more source directories by grouping together related files to be compiled or packaged.
+  
+projectdir
+|-src
+  |-main
+    |-java
+    |-resources
+    |-generatedSource
+|-build.gradle
+
+How can we add more source file folders letting gradle compile include as part of the classpath of our application that is where gradle introduced sourceSets.
+  
+sourceSets {
+  main {
+    java {
+      srcDirs 'generatedSources'        
+    }
+  }
+}  
+
+---------------------------------------------------------------------------------------------------------
+How to build an web application using gradle?
+Gradle has provided war plugin and we just need to follow same standard conventions of maven web application project structure.
+  
+webprojectdir
+|-src
+  |-main
+    |-java
+    |-resources
+    |-webapp
+      |-WEB-INF
+|-build.gradle
+
+plugins {
+  id 'war'
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+
+}
+--------------------------------------------------------------------------------------------------------
+How to work with multi-module project in gradle?
+we have broken down our project in multiple war modules, but across the war modules we want to reuse the same core components like service/dao without re-writing in each of the war modules, this can be achieved using multi-module gradle project
+
+
+integraph
+|-src
+  |-main
+    |-java
+    |-resources
+    |-webapp
+      |-WEB-INF
+|-coreapi
+  |-src
+  |-main
+    |-java
+    |-resources
+  |-build.gradle
+|-build.gradle  
+|-settings.gradle
+
+settings.gradle is a configuration file that will be executed during configuration phase gradle lifecycle.
+
+settings.gradle
+rootProject.name='integraph'
+include('coreapi')
+  
+  
+
+integraph/build.gradle
+
+dependencies {
+  compile project:('coreapi')
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

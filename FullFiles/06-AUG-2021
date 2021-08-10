@@ -1,0 +1,119 @@
+class Calculator {
+  public int add(int a, int b) {
+    return a+b;
+  }
+  public int substract(int a, int b) {
+    return b - a;
+  }
+}
+// 10 methods, 3 types
+
+class TestResults {
+  int totalTests;
+  int passed;
+  int failed;
+  void passed() {
+    totalTests++;
+    passed++;
+  }
+  void failed() {
+    totalTests++;
+    failed++;
+  }
+}
+
+class CalculatorTest {
+  
+  public void testAdd() {
+    int a = 10;
+    int b = 20;    
+    int expectedSum = 30;
+    
+    Calculator calculator = new Calculator();
+    
+    
+    int actualSum = calculator.add(a, b);
+    if(expectedSum != actualSum) {                
+      throw new TestFailedException("expectedSum :"+expectedSum +" doesnt match with actualSum:"+actualSum);
+    }    
+  }
+  
+  public void testSubstract() {
+    a = 10;
+    b = 20;
+    int expectedSubstract = 10;
+    calculator = new Calculator();
+    int actualSubstract = calculator.substract(a, b);
+    if(expectedSubstract != actualSubstract) {
+      throw new TestFailedException("expectedSubstract :"+expectedSubstract +" doesnt match with actualSubstract:"+actualSubstract")
+    }    
+  }
+}
+                                    
+class TestRunner {
+  public static void main(String[] args) {
+    CalculatorTest calculatorTest = new CalculatorTest();
+    
+  }
+}   
+                                    
+What are the requirements of writting the Unit Test cases?
+1. Every Test Excecution should verify the actual/expected report as pass/failed, to do this we need to write conditional logic and throw Exception, instead of we verifying the output and throwing exception in every method, we need a class which takes care comparing and reporting the error.
+                                    
+2. We need a mechanism for initializing the test fixture                                    
+3. Every test method should be executed isolated from another test executions 
+4. We need a TestRunner that takes care of instantiating the TestCases class passed and invoke test methods capture outcome and report
+5. Testing Reporting mechanism
+                                    
+Instead of we writing the above the JUnitFramework takes care of providing these as part of api.
+---------------------------------------------------------------------------------------------------------
+JUnit Framework has provided necessary api allowing the developer to write the Testcases, executing and reporting the test executions will be taken care by JUnit.
+                                    
+                                    
+JUnit 3.x = deprecated
+JUnit 4.0 = annotation-driven programming
+JUnit 5.0 = latest
+
+                                    
+
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    
+                                    

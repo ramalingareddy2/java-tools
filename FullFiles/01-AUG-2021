@@ -1,0 +1,262 @@
+The Project Api
+The Build Script represents a Project object in Gradle Api. A Project is an abstract concept, but we can map a Gradle Project to any software component that need to be built, like a java library project etc.
+  
+Each build script we define is associated with an Object of type Project and as the build script executes, it configures this project. almost all the top-level properties and blocks in a build script are part of project API.
+  build.gradle
+  println name
+  println project.name
+  
+standard project properties which we can access in our build script
+project       = implicit reference of the current buildscript object
+name          = the name of the project directory
+path          = the absolute path of the project
+Description   = description of the project
+projectDir    = The directory containing the build script
+buildDir      = projectDir/build
+
+
+build.gradle
+description="A Gradle project"
+println project.description
+---------------------------------------------------------------------------------------------------------
+Using Gradle Plugins
+For everything to be performed as part of the build, we need to write task in Gradle which performs a unit for work. When we are building an project of type: 
+for example a java library project the tasks we need to perform is always going to be fixed like
+  - clean
+  - compile
+  - copy resources
+  - package
+
+Now if we have to define the Tasks for perform these build activities, it would be repeatitive across the projects and it no more less than an ANT. Alaas we reinvented the wheel, changed syntax but landedup on to the same mine.
+  
+So unlike Ant Gradle has introduced plugins, which we can think of them as equal to Maven build lifecycle. When it comes to maven, we have only default lifecycle which has declared standard phases through which build will be performed.
+  
+Whereas in Gradle, for each type of project, the phases/tasks we want to apply will change, so Gradle encapsulated all the tasks applicable for building the project along with conventions and produced us Plugins.
+From the above we can understand there are various types of plugins provided by Gradle, we should apply them to our project based on the type of the project we are building, so that we dont have to define our own tasks to perform common build activities for the project, unless we want to customize.
+  
+What plugins do:
+Applying a plugin to a project allows the plugin to extend project capabilities like
+  1. Extend the Gradle Model (allows you to define more DSL Elements to be configured)
+  2. Configure projects according to convention (add more tasks, apply default directory structure)
+  3. Apply specific configurations (enforce standards)
+  
+advantages of plugins:-
+  1. reduces the overhead of writing the similar logic in building the same type of projects
+  2. converts you gradle build script from imperative programming to declarative approach
+  
+How to apply Plugin?
+Plugins {
+  id 'java'
+}
+
+--------------------------------------------------------------------------------------------------------
+How to build a java project in Gradle?
+A java project can be any of the below types:
+  1. java library project
+  2. java application
+  3. web application
+  
+For build each of these projects Gradle has provided plugins up on applying them the relevant configurations and tasks would be added to our project.
+    
+#1 Standardized directory Structure
+Gradle 'java plugins' by default follows the same directory structure the Maven project.
+project
+|-src
+  |-main
+    |-java
+    |-resources
+|-test
+  |-main
+    |-java
+    |-resources
+|-build.gradle
+
+but if we want to customize the directory structure of your java project, we can achieve it easily in Gradle.
+  
+#2 build lifecycle
+when we apply plugin, plugin imports/adds additional tasks pertaining to the project, so that we dont have to write any tasks to build the project. Since the plugins are standardized always we can easily identify which tasks are available for building a project of that type.
+
+#3 dependency management
+Gradle supports dependency management
+  3.1 it allows you to define repositories information from where you want gradle to locate the dependencies and download.
+  3.2 we can declare dependencies of our project in gradle build script so that it takes care of downloading them from specified repositories
+  
+#4 archetypes
+  In Gradle there is no concept of archetypes, because gradle buildscript by itself is very minimal unlike your maven pom.xml
+  but to facilitate in easily creating an project of specific type with standardized directory structure gradle has provided init plugin.
+  
+#5 Tools support
+  every ide supports equally gradle
+-------------------------------------------------------------------------------------------------------- How to build a java project using Gradle?
+
+#1 create the java project based on standardized directory structure
+project
+|-src
+  |-main
+    |-java
+    |-resources
+|-test
+  |-main
+    |-java
+    |-resources
+|-build.gradle
+
+#2 add the project relevant plugins and configuration to build the java project
+
+build.gradle
+plugins {
+  id 'java-library'
+}
+
+java {
+  sourceCompatibility=JavaVersion.VERSION_1_9
+  targetCompatibility=JavaVersion.VERSION_1_9
+}
+
+(or)
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(9))
+  }
+}
+version="1.0.0"
+toolchain = based on which gradle searches for available jdks on your machine, and chooses one that matches with toolchain configuration then configures jdk path pointing that location and build project. if the relevant jdk is not available, it downloads installs and builds the project.
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
